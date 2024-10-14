@@ -24,6 +24,8 @@
 	<modules>
 		<module>projetai-api</module>
 		<module>projetai-customer</module>
+		<module>projetai-quality</module>
+		<module>projetai-development</module>
 	</modules>
 	<scm>
 		<connection/>

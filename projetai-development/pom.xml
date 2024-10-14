@@ -9,25 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>projetai-api</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.projetai</groupId>
-            <artifactId>projetai-customer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.projetai</groupId>
-            <artifactId>projetai-quality</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.projetai</groupId>
-            <artifactId>projetai-development</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>projetai-development</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
