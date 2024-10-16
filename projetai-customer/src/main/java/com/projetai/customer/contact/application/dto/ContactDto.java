@@ -11,7 +11,7 @@ public record ContactDto(
 ) {
 
     public Contact toContact() {
-        return new Contact(title, message, type, clientDto.toClient());
+        return new Contact(title, message, type);
     }
 
 }

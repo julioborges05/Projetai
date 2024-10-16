@@ -3,6 +3,7 @@ package com.projetai.customer.contact.infra.contact;
 import com.projetai.customer.contact.domain.contact.Contact;
 import com.projetai.customer.contact.domain.contact.type.ContactType;
 import com.projetai.customer.contact.infra.user.ClientEntity;
+import com.projetai.customer.contact.infra.user.SupportEntity;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -19,15 +20,11 @@ public class ContactEntity {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private ClientEntity clientEntity;
+    @ManyToOne
+    @JoinColumn(name = "support_entity_id")
+    private SupportEntity supportEntity;
 
     public ContactEntity() {
-    }
-
-    public ContactEntity(String title, String message, ContactType type, ClientEntity clientEntity) {
-        this.title = title;
-        this.message = message;
-        this.type = type;
-        this.clientEntity = clientEntity;
     }
 
     public Long getId() {
@@ -68,6 +65,14 @@ public class ContactEntity {
 
     public void setClientEntity(ClientEntity clientEntity) {
         this.clientEntity = clientEntity;
+    }
+
+    public SupportEntity getSupportEntity() {
+        return supportEntity;
+    }
+
+    public void setSupportEntity(SupportEntity supportEntity) {
+        this.supportEntity = supportEntity;
     }
 
     public Contact toContact() {
