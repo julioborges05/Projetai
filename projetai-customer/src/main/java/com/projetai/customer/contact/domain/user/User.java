@@ -1,4 +1,4 @@
-package com.projetai.customer.contact.domain.common;
+package com.projetai.customer.contact.domain.user;
 
 public abstract class User {
 

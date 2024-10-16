@@ -1,17 +1,26 @@
 package com.projetai.customer.contact.application;
 
-import com.projetai.customer.contact.domain.client.Client;
-import com.projetai.customer.contact.domain.support.Support;
+import com.projetai.customer.contact.application.dto.ContactDto;
+import com.projetai.customer.contact.domain.contact.Contact;
+import com.projetai.customer.contact.domain.user.support.Support;
+import com.projetai.customer.contact.infra.ContactRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ContactService {
 
-    public void makeContact() {
-        Support support = new Support("Support", "helpdesk@projetai.com");
+    private final ContactRepository contactRepository;
 
-        Client client = new Client("John Doe", "johndoe@gmail.com");
-        client.makeContactTo(support);
+    @Autowired
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+
+    public void makeContact(ContactDto contactDto) {
+        Contact contact = contactDto.toContact();
+//        contact.makeContactTo();
+//        contact.sendNotificationTo();
     }
 
 }

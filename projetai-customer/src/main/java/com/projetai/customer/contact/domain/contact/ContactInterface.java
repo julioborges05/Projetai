@@ -1,9 +1,11 @@
 package com.projetai.customer.contact.domain.contact;
 
-import com.projetai.customer.contact.domain.common.User;
+import com.projetai.customer.contact.domain.user.support.Support;
 
 public interface ContactInterface {
 
-    <U extends User> void sendNotificationTo(U user);
+    void makeContactTo(Support support);
+
+    void sendNotificationTo(Support support);
 
 }

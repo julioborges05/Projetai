@@ -1,19 +1,11 @@
-package com.projetai.customer.contact.domain.client;
+package com.projetai.customer.contact.domain.user.client;
 
-import com.projetai.customer.contact.domain.common.User;
-import com.projetai.customer.contact.domain.contact.Contact;
-import com.projetai.customer.contact.domain.support.Support;
+import com.projetai.customer.contact.domain.user.User;
 
-public class Client extends User implements ClientInterface {
+public class Client extends User {
 
     public Client(String name, String email) {
         super(name, email);
-    }
-
-    @Override
-    public void makeContactTo(Support support) {
-        Contact contact = new Contact();
-        contact.sendNotificationTo(support);
     }
 
 }

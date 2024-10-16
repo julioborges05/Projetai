@@ -1,4 +1,11 @@
-package com.projetai.customer.contact.application;
+package com.projetai.customer.contact.application.dto;
 
-public record ClientData() {
+import com.projetai.customer.contact.domain.user.client.Client;
+
+public record ClientDto(String name, String email) {
+
+    public Client toClient() {
+        return new Client(name, email);
+    }
+
 }

@@ -1,6 +1,6 @@
-package com.projetai.customer.contact.domain.support;
+package com.projetai.customer.contact.domain.user.support;
 
-import com.projetai.customer.contact.domain.common.User;
+import com.projetai.customer.contact.domain.user.User;
 
 public class Support extends User {
 
