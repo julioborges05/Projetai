@@ -1,12 +1,12 @@
 package com.projetai.customer.contact.application.dto;
 
 import com.projetai.customer.contact.domain.contact.Contact;
-import com.projetai.customer.contact.domain.contact.Type;
+import com.projetai.customer.contact.domain.contact.type.ContactType;
 
 public record ContactDto(
         String title,
         String message,
-        Type type,
+        ContactType type,
         ClientDto clientDto
 ) {
 

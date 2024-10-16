@@ -2,8 +2,7 @@ package com.projetai.customer.contact.application;
 
 import com.projetai.customer.contact.application.dto.ContactDto;
 import com.projetai.customer.contact.domain.contact.Contact;
-import com.projetai.customer.contact.domain.user.support.Support;
-import com.projetai.customer.contact.infra.ContactRepository;
+import com.projetai.customer.contact.infra.contact.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,8 @@ public class ContactService {
 
     public void makeContact(ContactDto contactDto) {
         Contact contact = contactDto.toContact();
-//        contact.makeContactTo();
-//        contact.sendNotificationTo();
+        contact.makeContact();
+        contact.sendNotification();
     }
 
 }
