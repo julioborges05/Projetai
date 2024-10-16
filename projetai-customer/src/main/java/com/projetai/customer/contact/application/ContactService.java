@@ -37,8 +37,7 @@ public class ContactService {
         Support support = getSupportForContact();
         Contact contact = contactDto.toContact();
 
-        ContactEntity contactEntity = contact.makeContactFromClientToSupport(client, support);
-        contactRepository.save(contactEntity);
+        contactRepository.save(contact.makeContactFromClientToSupport(client, support));
 
         contact.sendNotificationTo(support);
     }
