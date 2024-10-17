@@ -6,11 +6,6 @@ public class Support extends User {
 
     private boolean isAvailable;
 
-    public Support(String name, String email) {
-        super(name, email);
-        this.isAvailable = false;
-    }
-
     public Support(String name, String email, boolean isAvailable) {
         super(name, email);
         this.isAvailable = isAvailable;

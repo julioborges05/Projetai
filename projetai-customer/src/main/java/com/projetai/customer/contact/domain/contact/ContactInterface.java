@@ -1,13 +1,13 @@
 package com.projetai.customer.contact.domain.contact;
 
-import com.projetai.customer.contact.domain.user.client.Client;
-import com.projetai.customer.contact.domain.user.support.Support;
 import com.projetai.customer.contact.infra.contact.ContactEntity;
+import com.projetai.customer.contact.infra.notification.NotificationEntity;
+import com.projetai.customer.contact.infra.user.support.SupportEntity;
 
 public interface ContactInterface {
 
-    ContactEntity makeContactFromClientToSupport(Client client, Support support);
+    ContactEntity makeContact();
 
-    void sendNotificationTo(Support support);
+    NotificationEntity<SupportEntity> makeNotification();
 
 }

@@ -5,12 +5,12 @@ import com.projetai.customer.contact.application.dto.ContactDto;
 import com.projetai.customer.contact.domain.contact.Contact;
 import com.projetai.customer.contact.domain.user.client.Client;
 import com.projetai.customer.contact.domain.user.support.Support;
-import com.projetai.customer.contact.infra.contact.ContactEntity;
 import com.projetai.customer.contact.infra.contact.ContactRepository;
-import com.projetai.customer.contact.infra.user.ClientEntity;
-import com.projetai.customer.contact.infra.user.ClientRepository;
-import com.projetai.customer.contact.infra.user.SupportEntity;
-import com.projetai.customer.contact.infra.user.SupportRepository;
+import com.projetai.customer.contact.infra.notification.NotificationRepository;
+import com.projetai.customer.contact.infra.user.client.ClientEntity;
+import com.projetai.customer.contact.infra.user.client.ClientRepository;
+import com.projetai.customer.contact.infra.user.support.SupportEntity;
+import com.projetai.customer.contact.infra.user.support.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,24 +22,25 @@ public class ContactService {
     private final ContactRepository contactRepository;
     private final SupportRepository supportRepository;
     private final ClientRepository clientRepository;
+    private final NotificationRepository notificationRepository;
 
     @Autowired
     public ContactService(ContactRepository contactRepository, SupportRepository supportRepository,
-                          ClientRepository clientRepository) {
+                          ClientRepository clientRepository, NotificationRepository notificationRepository) {
         this.contactRepository = contactRepository;
         this.supportRepository = supportRepository;
         this.clientRepository = clientRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Transient
     public void makeContact(ContactDto contactDto) {
         Client client = getClientForContact(contactDto.clientDto());
         Support support = getSupportForContact();
-        Contact contact = contactDto.toContact();
+        Contact contact = new Contact(contactDto, client, support);
 
-        contactRepository.save(contact.makeContactFromClientToSupport(client, support));
-
-        contact.sendNotificationTo(support);
+        contactRepository.save(contact.makeContact());
+        notificationRepository.save(contact.makeNotification());
     }
 
     private Support getSupportForContact() {
