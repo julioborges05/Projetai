@@ -1,4 +1,4 @@
-package com.projetai.development.develop.infra;
+package com.projetai.development.develop.infra.development;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
