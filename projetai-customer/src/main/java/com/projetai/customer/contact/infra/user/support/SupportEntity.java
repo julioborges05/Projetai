@@ -2,19 +2,17 @@ package com.projetai.customer.contact.infra.user.support;
 
 import com.projetai.customer.contact.domain.user.support.Support;
 import com.projetai.customer.contact.infra.user.UserEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
+@Entity(name = "support")
 public class SupportEntity extends UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "is_available")
     private boolean isAvailable;
 
     public SupportEntity() {
