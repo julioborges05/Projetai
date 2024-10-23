@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
+@Entity(name = "contact")
 public class ContactEntity {
 
     @Id
@@ -20,7 +20,7 @@ public class ContactEntity {
     @JoinColumn(name = "client_id", nullable = false)
     private ClientEntity clientEntity;
     @ManyToOne
-    @JoinColumn(name = "support_entity_id")
+    @JoinColumn(name = "support_id")
     private SupportEntity supportEntity;
 
     public ContactEntity() {
