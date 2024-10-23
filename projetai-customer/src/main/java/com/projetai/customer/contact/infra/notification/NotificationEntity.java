@@ -2,14 +2,11 @@ package com.projetai.customer.contact.infra.notification;
 
 import com.projetai.customer.contact.domain.contact.type.ContactType;
 import com.projetai.customer.contact.infra.user.UserEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
+@Entity(name = "notification")
 public class NotificationEntity<U extends UserEntity> {
 
     @Id
@@ -18,6 +15,8 @@ public class NotificationEntity<U extends UserEntity> {
     private String title;
     private String message;
     private ContactType type;
+    @ManyToOne(targetEntity = UserEntity.class)
+    @JoinColumn(name = "user_id")
     private U user;
     private boolean read = false;
 
