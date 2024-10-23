@@ -1,6 +1,6 @@
 package com.projetai.development.develop.domain.user.developer;
 
-import com.projetai.development.develop.domain.user.User;
+import com.projetai.development.utils.domain.user.User;
 
 public class Developer extends User {
 
