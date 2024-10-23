@@ -1,12 +1,11 @@
 package com.projetai.development.utils.infra.notification;
 
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.infra.notification.NotificationEntity;
-import com.projetai.development.develop.infra.user.UserEntity;
+import com.projetai.development.utils.infra.user.UserEntity;
 
 public class NotificationEntityBuilder<U extends UserEntity> {
 
-    private final com.projetai.development.develop.infra.notification.NotificationEntity<U> notification = new com.projetai.development.develop.infra.notification.NotificationEntity<>();
+    private final NotificationEntity<U> notification = new NotificationEntity<U>();
 
     public NotificationEntityBuilder<U> withTitle(String title) {
         notification.setTitle(title);
