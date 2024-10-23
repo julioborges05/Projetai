@@ -23,17 +23,21 @@ public class RefinementEntity {
 
     private String userEmail;
 
-    private LocalDateTime spendedTime;
+    private LocalDateTime startedTime;
+
+    private LocalDateTime finishedTime;
 
     public RefinementEntity() {}
 
-    public RefinementEntity(Long id, boolean isApproved, String necessaryAdjustments, String techLeadUsername, String userEmail, LocalDateTime spendedTime) {
+    public RefinementEntity(Long id, boolean isApproved, String necessaryAdjustments, String techLeadUsername,
+                            String userEmail, LocalDateTime startedTime, LocalDateTime finishedTime) {
         this.id = id;
         this.isApproved = isApproved;
         this.necessaryAdjustments = necessaryAdjustments;
         this.techLeadUsername = techLeadUsername;
         this.userEmail = userEmail;
-        this.spendedTime = spendedTime;
+        this.startedTime = startedTime;
+        this.finishedTime = finishedTime;
     }
 
     @Override
@@ -49,11 +53,12 @@ public class RefinementEntity {
                 && Objects.equals(necessaryAdjustments, that.necessaryAdjustments)
                 && Objects.equals(techLeadUsername, that.techLeadUsername)
                 && Objects.equals(userEmail, that.userEmail)
-                && Objects.equals(spendedTime, that.spendedTime);
+                && Objects.equals(startedTime, that.startedTime)
+                && Objects.equals(finishedTime, that.finishedTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadUsername, userEmail, spendedTime);
+        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadUsername, userEmail, startedTime, finishedTime);
     }
 }

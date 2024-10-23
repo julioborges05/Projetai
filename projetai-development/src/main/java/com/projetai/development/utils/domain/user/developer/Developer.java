@@ -1,4 +1,4 @@
-package com.projetai.development.develop.domain.user.developer;
+package com.projetai.development.utils.domain.user.developer;
 
 import com.projetai.development.utils.domain.user.User;
 

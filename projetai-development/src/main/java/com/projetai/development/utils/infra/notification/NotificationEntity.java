@@ -1,7 +1,7 @@
 package com.projetai.development.utils.infra.notification;
 
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.infra.user.UserEntity;
+import com.projetai.development.utils.infra.user.UserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

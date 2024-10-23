@@ -1,6 +1,6 @@
-package com.projetai.development.develop.domain.user.support;
+package com.projetai.development.utils.domain.user.support;
 
-import com.projetai.development.develop.domain.user.User;
+import com.projetai.development.utils.domain.user.User;
 
 public class Support extends User {
 
