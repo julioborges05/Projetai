@@ -40,28 +40,56 @@ public class RefinementEntity {
         this.finishedTime = finishedTime;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
     }
 
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
 
+    public String getNecessaryAdjustments() {
+        return necessaryAdjustments;
+    }
+
     public void setNecessaryAdjustments(String necessaryAdjustments) {
         this.necessaryAdjustments = necessaryAdjustments;
+    }
+
+    public String getTechLeadUsername() {
+        return techLeadUsername;
     }
 
     public void setTechLeadUsername(String techLeadUsername) {
         this.techLeadUsername = techLeadUsername;
     }
 
+    public String getDeveloperUsername() {
+        return developerUsername;
+    }
+
     public void setDeveloperUsername(String developerUsername) {
         this.developerUsername = developerUsername;
     }
 
+    public LocalDateTime getStartedTime() {
+        return startedTime;
+    }
+
     public void setStartedTime(LocalDateTime startedTime) {
         this.startedTime = startedTime;
+    }
+
+    public LocalDateTime getFinishedTime() {
+        return finishedTime;
     }
 
     public void setFinishedTime(LocalDateTime finishedTime) {
