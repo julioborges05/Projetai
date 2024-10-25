@@ -21,7 +21,7 @@ public class RefinementEntity {
 
     private String techLeadUsername;
 
-    private String userEmail;
+    private String developerUsername;
 
     private LocalDateTime startedTime;
 
@@ -30,13 +30,41 @@ public class RefinementEntity {
     public RefinementEntity() {}
 
     public RefinementEntity(Long id, boolean isApproved, String necessaryAdjustments, String techLeadUsername,
-                            String userEmail, LocalDateTime startedTime, LocalDateTime finishedTime) {
+                            String developerUsername, LocalDateTime startedTime, LocalDateTime finishedTime) {
         this.id = id;
         this.isApproved = isApproved;
         this.necessaryAdjustments = necessaryAdjustments;
         this.techLeadUsername = techLeadUsername;
-        this.userEmail = userEmail;
+        this.developerUsername = developerUsername;
         this.startedTime = startedTime;
+        this.finishedTime = finishedTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public void setNecessaryAdjustments(String necessaryAdjustments) {
+        this.necessaryAdjustments = necessaryAdjustments;
+    }
+
+    public void setTechLeadUsername(String techLeadUsername) {
+        this.techLeadUsername = techLeadUsername;
+    }
+
+    public void setDeveloperUsername(String developerUsername) {
+        this.developerUsername = developerUsername;
+    }
+
+    public void setStartedTime(LocalDateTime startedTime) {
+        this.startedTime = startedTime;
+    }
+
+    public void setFinishedTime(LocalDateTime finishedTime) {
         this.finishedTime = finishedTime;
     }
 
@@ -52,13 +80,13 @@ public class RefinementEntity {
                 && Objects.equals(id, that.id)
                 && Objects.equals(necessaryAdjustments, that.necessaryAdjustments)
                 && Objects.equals(techLeadUsername, that.techLeadUsername)
-                && Objects.equals(userEmail, that.userEmail)
+                && Objects.equals(developerUsername, that.developerUsername)
                 && Objects.equals(startedTime, that.startedTime)
                 && Objects.equals(finishedTime, that.finishedTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadUsername, userEmail, startedTime, finishedTime);
+        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadUsername, developerUsername, startedTime, finishedTime);
     }
 }
