@@ -10,7 +10,7 @@ import java.util.Objects;
 public class SupportEntity extends UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "is_available")
     private boolean isAvailable;

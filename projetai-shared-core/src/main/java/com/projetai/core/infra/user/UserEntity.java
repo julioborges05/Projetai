@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "user")
+@Entity(name = "users")
 public abstract class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
     protected Long id;
     protected String name;
     protected String email;
