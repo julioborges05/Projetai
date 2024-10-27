@@ -1,9 +1,15 @@
 package com.projetai.customer.contact.infra.user;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity(name = "user")
 public abstract class UserEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     protected String name;
     protected String email;
 
