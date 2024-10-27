@@ -25,6 +25,7 @@ public class ClientEntity extends UserEntity implements UserInterface {
 
     public ClientEntity(Client client) {
         super(client.getName(), client.getEmail());
+        this.id = client.getId();
     }
 
     public ClientEntity(ClientDto clientDto) {
@@ -33,12 +34,16 @@ public class ClientEntity extends UserEntity implements UserInterface {
     }
 
     public Client toClient() {
-        return new Client(name, email);
+        return new Client(id, name, email);
     }
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.projetai.customer.contact.application;
 
+import com.projetai.core.application.dto.SupportDto;
 import com.projetai.customer.contact.application.dto.ClientDto;
 import com.projetai.customer.contact.application.dto.ContactDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class ContactController {
     @RequestMapping("/createClient")
     public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto clientDto) {
         return ResponseEntity.ok(contactService.createClient(clientDto));
+    }
+
+    @GetMapping
+    @RequestMapping("/support")
+    public ResponseEntity<List<SupportDto>> findAllSupports() {
+        return ResponseEntity.ok(contactService.findAllSupports());
+    }
+
+    @PostMapping
+    @RequestMapping("/createSupport")
+    public ResponseEntity<SupportDto> createSupport(@RequestBody SupportDto supportDto) {
+        return ResponseEntity.ok(contactService.createSupport(supportDto));
     }
 
     @PostMapping

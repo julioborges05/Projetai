@@ -1,10 +1,12 @@
 package com.projetai.core.infra.user.support;
 
+import com.projetai.core.application.dto.SupportDto;
 import com.projetai.core.domain.user.support.Support;
 import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.UserInterface;
 import jakarta.persistence.*;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import java.util.Objects;
 
 @Entity(name = "support")
@@ -25,6 +27,10 @@ public class SupportEntity extends UserEntity implements UserInterface {
         return this.id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public boolean getIsAvailable() {
         return this.isAvailable;
     }
@@ -32,6 +38,13 @@ public class SupportEntity extends UserEntity implements UserInterface {
     public SupportEntity(Support support) {
         super(support.getName(), support.getEmail());
         this.isAvailable = support.isAvailable();
+        this.id = support.getId();
+    }
+
+    public SupportEntity(SupportDto supportDto) {
+        super(supportDto.name(), supportDto.email());
+        this.id = supportDto.id();
+        this.isAvailable = supportDto.isAvailable();
     }
 
     @Override
