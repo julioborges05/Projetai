@@ -1,10 +1,10 @@
 package com.projetai.development.develop.application;
 
+import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.development.develop.application.dto.DevelopmentDto;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.infra.development.DevelopmentEntity;
 import com.projetai.development.develop.infra.development.DevelopmentRepository;
-import com.projetai.development.utils.infra.notification.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

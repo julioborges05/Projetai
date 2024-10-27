@@ -1,7 +1,7 @@
 package com.projetai.development.utils.infra.user.developer;
 
+import com.projetai.core.infra.user.UserEntity;
 import com.projetai.development.utils.domain.user.developer.Developer;
-import com.projetai.development.utils.infra.user.UserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

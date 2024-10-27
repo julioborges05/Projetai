@@ -1,4 +1,4 @@
-package com.projetai.customer.contact.infra.user;
+package com.projetai.core.infra.user;
 
 import jakarta.persistence.*;
 

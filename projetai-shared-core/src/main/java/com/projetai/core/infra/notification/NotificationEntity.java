@@ -1,7 +1,6 @@
-package com.projetai.customer.contact.infra.notification;
+package com.projetai.core.infra.notification;
 
-import com.projetai.customer.contact.domain.contact.type.ContactType;
-import com.projetai.customer.contact.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserEntity;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -14,7 +13,7 @@ public class NotificationEntity<U extends UserEntity> {
     private Long id;
     private String title;
     private String message;
-    private ContactType type;
+    private String type;
     @ManyToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_id")
     private U user;
@@ -31,7 +30,7 @@ public class NotificationEntity<U extends UserEntity> {
         this.message = message;
     }
 
-    public void setType(ContactType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -70,7 +69,7 @@ public class NotificationEntity<U extends UserEntity> {
                 && Objects.equals(id, that.id)
                 && Objects.equals(title, that.title)
                 && Objects.equals(message, that.message)
-                && type == that.type
+                && Objects.equals(type, that.type)
                 && Objects.equals(user, that.user);
     }
 

@@ -1,9 +1,9 @@
 package com.projetai.development.refinement.domain.refinement;
 
+import com.projetai.core.infra.notification.NotificationEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.development.refinement.infra.refinement.RefinementEntity;
 import com.projetai.development.refinement.infra.refinement.RefinementEntityBuilder;
-import com.projetai.development.utils.infra.notification.NotificationEntity;
-import com.projetai.development.utils.infra.user.support.SupportEntity;
 
 import java.time.LocalDateTime;
 

@@ -1,10 +1,10 @@
 package com.projetai.development.develop.infra.development;
 
+import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
 import com.projetai.development.develop.domain.development.type.DevelopmentType;
 import com.projetai.development.utils.infra.user.developer.DeveloperEntity;
-import com.projetai.development.utils.infra.user.support.SupportEntity;
 import jakarta.persistence.*;
 
 @Entity

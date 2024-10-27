@@ -1,7 +1,6 @@
-package com.projetai.development.utils.domain.user;
+package com.projetai.core.domain.user;
 
 public abstract class User {
-
     private final String name;
     private final String email;
 
@@ -11,10 +10,10 @@ public abstract class User {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 }

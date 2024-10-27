@@ -1,4 +1,4 @@
-package com.projetai.customer.contact.infra.user.support;
+package com.projetai.core.infra.user.support;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
