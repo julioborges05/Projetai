@@ -41,7 +41,7 @@ public class Contact implements ContactInterface {
     }
 
     @Override
-    public NotificationEntity<SupportEntity> makeNotification() {
+    public NotificationEntity<SupportEntity> makeNotificationToSupport() {
         String message = "New contact from " + this.client.getName() + " with type " + this.type;
 
         return new NotificationEntityBuilder<SupportEntity>()
@@ -50,6 +50,26 @@ public class Contact implements ContactInterface {
                 .withType(this.type)
                 .withUserEntity(new SupportEntity(this.support))
                 .build();
+    }
+
+    @Override
+    public ContactEntity findContact() {
+        return null;
+    }
+
+    @Override
+    public void replyProblem() {
+
+    }
+
+    @Override
+    public void closeContact() {
+
+    }
+
+    @Override
+    public NotificationEntity<ClientEntity> makeNotificationToClient() {
+        return null;
     }
 
 }

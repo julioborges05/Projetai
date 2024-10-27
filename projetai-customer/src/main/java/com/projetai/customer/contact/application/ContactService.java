@@ -11,6 +11,7 @@ import com.projetai.customer.contact.infra.user.client.ClientEntity;
 import com.projetai.customer.contact.infra.user.client.ClientRepository;
 import com.projetai.customer.contact.infra.user.support.SupportEntity;
 import com.projetai.customer.contact.infra.user.support.SupportRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +34,14 @@ public class ContactService {
         this.notificationRepository = notificationRepository;
     }
 
-    @Transient
+    @Transactional
     public void makeContact(ContactDto contactDto) {
         Client client = getClientForContact(contactDto.clientDto());
         Support support = getSupportForContact();
         Contact contact = new Contact(contactDto, client, support);
 
         contactRepository.save(contact.makeContact());
-        notificationRepository.save(contact.makeNotification());
+        notificationRepository.save(contact.makeNotificationToSupport());
     }
 
     private Support getSupportForContact() {

@@ -5,6 +5,6 @@ create table contact (
     type varchar(255) not null,
     client_id bigint not null,
     support_id bigint not null,
-    foreign key (client_id) references client(id),
-    foreign key (support_id) references support(id)
+    foreign key (client_id) references users(id),
+    foreign key (support_id) references users(id)
 );

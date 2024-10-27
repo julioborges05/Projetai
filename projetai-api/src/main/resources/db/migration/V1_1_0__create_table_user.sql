@@ -5,10 +5,8 @@ create table users (
 );
 
 create table if not exists client (
-    id serial primary key
 ) inherits (users);
 
 create table if not exists support (
-    id serial primary key,
     is_available boolean not null default true
 ) inherits (users);
