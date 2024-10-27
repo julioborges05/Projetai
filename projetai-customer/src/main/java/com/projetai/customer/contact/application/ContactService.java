@@ -14,6 +14,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ContactService {
 
@@ -57,4 +60,17 @@ public class ContactService {
                 .orElseThrow(() -> new RuntimeException("Client not found"));
     }
 
+    public List<ClientDto> findAllClients() {
+        return clientRepository.findAll()
+                .stream()
+                .map(Client::dbEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ClientDto createClient(ClientDto clientDto) {
+        ClientEntity client = new ClientEntity(clientDto);
+
+        return Client.dbEntityToDto(clientRepository.save(client));
+    }
 }

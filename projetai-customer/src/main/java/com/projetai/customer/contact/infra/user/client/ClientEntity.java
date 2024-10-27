@@ -1,11 +1,10 @@
 package com.projetai.customer.contact.infra.user.client;
 
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
+import com.projetai.customer.contact.application.dto.ClientDto;
 import com.projetai.customer.contact.domain.client.Client;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.IdGeneratorType;
 import org.hibernate.annotations.Parameter;
@@ -14,10 +13,11 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import java.util.Objects;
 
 @Entity(name = "client")
-public class ClientEntity extends UserEntity {
+public class ClientEntity extends UserEntity implements UserInterface {
 
     @Id
-    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     public ClientEntity() {
@@ -27,8 +27,18 @@ public class ClientEntity extends UserEntity {
         super(client.getName(), client.getEmail());
     }
 
+    public ClientEntity(ClientDto clientDto) {
+        super(clientDto.name(), clientDto.email());
+        this.id = clientDto.id();
+    }
+
     public Client toClient() {
         return new Client(name, email);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 
     @Override

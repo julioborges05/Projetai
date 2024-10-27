@@ -1,12 +1,13 @@
 package com.projetai.core.infra.notification;
 
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity(name = "notification")
-public class NotificationEntity<U extends UserEntity> {
+public class NotificationEntity<U extends UserEntity & UserInterface> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +15,11 @@ public class NotificationEntity<U extends UserEntity> {
     private String title;
     private String message;
     private String type;
-    @ManyToOne(targetEntity = UserEntity.class)
-    @JoinColumn(name = "user_id")
-    private U user;
+    private Long userId;
     private boolean read = false;
+
+    @Transient
+    private U user;
 
     public NotificationEntity() {
     }
@@ -34,12 +36,17 @@ public class NotificationEntity<U extends UserEntity> {
         this.type = type;
     }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public U getUser() {
         return user;
     }
 
     public void setUser(U user) {
         this.user = user;
+        this.userId = user.getId();
     }
 
     public void setRead(boolean read) {

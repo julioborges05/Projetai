@@ -1,8 +1,9 @@
 package com.projetai.core.infra.notification;
 
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
 
-public class NotificationEntityBuilder<U extends UserEntity> {
+public class NotificationEntityBuilder<U extends UserEntity & UserInterface> {
 
     private final NotificationEntity<U> notification = new NotificationEntity<>();
 

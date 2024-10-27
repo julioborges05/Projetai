@@ -1,19 +1,18 @@
 package com.projetai.development.utils.infra.user.developer;
 
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
 import com.projetai.development.utils.domain.user.developer.Developer;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity(name = "developer")
-public class DeveloperEntity extends UserEntity {
+public class DeveloperEntity extends UserEntity implements UserInterface {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     public DeveloperEntity() {
@@ -27,6 +26,7 @@ public class DeveloperEntity extends UserEntity {
         return new Developer(name, email);
     }
 
+    @Override
     public Long getId() {
         return id;
     }

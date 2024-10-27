@@ -2,15 +2,17 @@ package com.projetai.core.infra.user.support;
 
 import com.projetai.core.domain.user.support.Support;
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity(name = "support")
-public class SupportEntity extends UserEntity {
+public class SupportEntity extends UserEntity implements UserInterface {
 
     @Id
-    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "is_available")
     private boolean isAvailable;
@@ -18,6 +20,7 @@ public class SupportEntity extends UserEntity {
     public SupportEntity() {
     }
 
+    @Override
     public Long getId() {
         return this.id;
     }

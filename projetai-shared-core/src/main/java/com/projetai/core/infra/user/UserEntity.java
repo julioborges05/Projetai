@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "users")
+@MappedSuperclass
 public abstract class UserEntity {
 
-    @Id
-    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
-    protected Long id;
     protected String name;
     protected String email;
 

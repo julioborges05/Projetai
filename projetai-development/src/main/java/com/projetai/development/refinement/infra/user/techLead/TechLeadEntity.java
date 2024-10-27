@@ -1,19 +1,18 @@
 package com.projetai.development.refinement.infra.user.techLead;
 
 import com.projetai.core.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserInterface;
 import com.projetai.development.refinement.domain.user.TechLead;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity(name = "techLead")
-public class TechLeadEntity extends UserEntity {
+public class TechLeadEntity extends UserEntity implements UserInterface {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     public TechLeadEntity() {
@@ -27,6 +26,7 @@ public class TechLeadEntity extends UserEntity {
         return new TechLead(name, email);
     }
 
+    @Override
     public Long getId() {
         return id;
     }
