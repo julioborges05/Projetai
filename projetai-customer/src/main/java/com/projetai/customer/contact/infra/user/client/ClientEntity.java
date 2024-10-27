@@ -1,7 +1,7 @@
 package com.projetai.customer.contact.infra.user.client;
 
-import com.projetai.customer.contact.domain.user.client.Client;
-import com.projetai.customer.contact.infra.user.UserEntity;
+import com.projetai.core.infra.user.UserEntity;
+import com.projetai.customer.contact.domain.client.Client;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

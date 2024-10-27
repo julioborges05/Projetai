@@ -2,7 +2,7 @@ package com.projetai.customer.contact.infra.contact;
 
 import com.projetai.customer.contact.domain.contact.type.ContactType;
 import com.projetai.customer.contact.infra.user.client.ClientEntity;
-import com.projetai.customer.contact.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 
 public class ContactEntityBuilder {
 
