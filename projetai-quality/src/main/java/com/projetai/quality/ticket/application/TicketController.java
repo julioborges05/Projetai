@@ -30,6 +30,11 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.GetAllTickets(pageable));
     }
 
+    @PostMapping("/parameters")
+    public ResponseEntity addTicketParameters(@RequestBody Long id,String parameters) {
+        ticketService.addTicketParameters(parameters, id);
+        return ResponseEntity.ok("Parameters set successfully");
+    }
 
 
 }

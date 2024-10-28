@@ -4,7 +4,7 @@ import com.projetai.quality.ticket.domain.status.TicketStatus;
 import com.projetai.quality.ticket.domain.type.TicketType;
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "ticket")
 public class TicketEntity {
 
     @Id
@@ -13,6 +13,7 @@ public class TicketEntity {
     private String title;
     private String description;
     private String user;
+    private String parameters;
 
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
@@ -43,6 +44,34 @@ public class TicketEntity {
 
     public TicketStatus getTicketStatus() {
         return ticketStatus;
+    }
+
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public void setTicketStatus(TicketStatus ticketStatus) {
+        this.ticketStatus = ticketStatus;
     }
 
     public TicketEntity() {
