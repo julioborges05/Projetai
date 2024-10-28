@@ -1,5 +1,6 @@
 package com.projetai.development.develop.application;
 
+import com.projetai.development.develop.application.dto.DeveloperDto;
 import com.projetai.development.develop.application.dto.DevelopmentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,12 @@ public class DevelopmentController {
     @Autowired
     public DevelopmentController(DevelopmentService developmentService) {
         this.developmentService = developmentService;
+    }
+
+    @PostMapping
+    @RequestMapping("/createDeveloper")
+    public ResponseEntity<DeveloperDto> createDeveloper(@RequestBody DeveloperDto developerDto) {
+        return ResponseEntity.ok(developmentService.createDeveloper(developerDto));
     }
 
     @PostMapping
