@@ -12,21 +12,23 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
                 "com.projetai.customer",
                 "com.projetai.quality",
                 "com.projetai.development",
-                "com.projetai.api"
+                "com.projetai.api",
+                "com.projetai.core"
         })
 @EntityScan(
         basePackages = {
                 "com.projetai.customer",
                 "com.projetai.quality",
                 "com.projetai.development",
-                "com.projetai.api"
+                "com.projetai.api",
+                "com.projetai.core"
         })
 @EnableJpaRepositories(
         basePackages = {
                 "com.projetai.customer",
                 "com.projetai.quality",
                 "com.projetai.development",
-                "com.projetai.api"
+                "com.projetai.core"
         })
 public class ProjetaiApiApplication {
 

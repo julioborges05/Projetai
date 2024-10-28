@@ -2,7 +2,7 @@ package com.projetai.customer.contact.infra.contact;
 
 import com.projetai.customer.contact.domain.contact.type.ContactType;
 import com.projetai.customer.contact.infra.user.client.ClientEntity;
-import com.projetai.customer.contact.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class ContactEntity {
     private String message;
     private ContactType type;
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id")
     private ClientEntity clientEntity;
     @ManyToOne
     @JoinColumn(name = "support_id")

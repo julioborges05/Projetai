@@ -1,15 +1,15 @@
 package com.projetai.customer.contact.domain.contact;
 
 import com.projetai.customer.contact.application.dto.ContactDto;
+import com.projetai.customer.contact.domain.client.Client;
+import com.projetai.core.domain.user.support.Support;
 import com.projetai.customer.contact.domain.contact.type.ContactType;
-import com.projetai.customer.contact.domain.user.client.Client;
-import com.projetai.customer.contact.domain.user.support.Support;
 import com.projetai.customer.contact.infra.contact.ContactEntity;
 import com.projetai.customer.contact.infra.contact.ContactEntityBuilder;
-import com.projetai.customer.contact.infra.notification.NotificationEntity;
-import com.projetai.customer.contact.infra.notification.NotificationEntityBuilder;
+import com.projetai.core.infra.notification.NotificationEntity;
+import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.customer.contact.infra.user.client.ClientEntity;
-import com.projetai.customer.contact.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 
 public class Contact implements ContactInterface {
 
@@ -41,15 +41,35 @@ public class Contact implements ContactInterface {
     }
 
     @Override
-    public NotificationEntity<SupportEntity> makeNotification() {
+    public NotificationEntity<SupportEntity> makeNotificationToSupport() {
         String message = "New contact from " + this.client.getName() + " with type " + this.type;
 
         return new NotificationEntityBuilder<SupportEntity>()
                 .withTitle("New contact")
                 .withMessage(message)
-                .withType(this.type)
+                .withType(this.type.name())
                 .withUserEntity(new SupportEntity(this.support))
                 .build();
+    }
+
+    @Override
+    public ContactEntity findContact() {
+        return null;
+    }
+
+    @Override
+    public void replyProblem() {
+
+    }
+
+    @Override
+    public void closeContact() {
+
+    }
+
+    @Override
+    public NotificationEntity<ClientEntity> makeNotificationToClient() {
+        return null;
     }
 
 }
