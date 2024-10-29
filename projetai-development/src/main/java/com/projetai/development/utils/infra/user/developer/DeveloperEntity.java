@@ -2,6 +2,7 @@ package com.projetai.development.utils.infra.user.developer;
 
 import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.UserInterface;
+import com.projetai.development.develop.application.dto.DeveloperDto;
 import com.projetai.development.utils.domain.user.developer.Developer;
 import jakarta.persistence.*;
 
@@ -20,6 +21,15 @@ public class DeveloperEntity extends UserEntity implements UserInterface {
 
     public DeveloperEntity(Developer developer) {
         super(developer.getName(), developer.getEmail());
+    }
+
+    public DeveloperEntity(DeveloperDto developerDto) {
+        super(developerDto.name(), developerDto.email());
+        this.id = developerDto.id();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Developer toDeveloper() {
