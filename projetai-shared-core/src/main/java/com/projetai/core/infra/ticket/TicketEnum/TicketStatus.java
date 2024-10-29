@@ -1,4 +1,4 @@
-package com.projetai.quality.ticket.domain.status;
+package com.projetai.core.infra.ticket.TicketEnum;
 
 public enum TicketStatus {
     TODO,

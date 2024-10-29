@@ -1,6 +1,7 @@
-package com.projetai.quality.ticket.infra;
+package com.projetai.core.infra.ticket;
 
-import com.projetai.quality.ticket.domain.status.TicketStatus;
+
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

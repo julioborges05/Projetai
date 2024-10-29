@@ -1,9 +1,10 @@
 package com.projetai.quality.ticket.application.dto;
 
 
-import com.projetai.quality.ticket.domain.status.TicketStatus;
-import com.projetai.quality.ticket.domain.type.TicketType;
-import com.projetai.quality.ticket.infra.TicketEntity;
+
+import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
+import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 
 public record GetAllTicketsData(Long id, String title, String description, String user, TicketType ticketType, TicketStatus ticketStatus) {
     public GetAllTicketsData(TicketEntity ticketEntity) {

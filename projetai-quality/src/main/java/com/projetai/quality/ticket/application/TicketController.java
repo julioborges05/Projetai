@@ -36,5 +36,4 @@ public class TicketController {
         return ResponseEntity.ok("Parameters set successfully");
     }
 
-
 }

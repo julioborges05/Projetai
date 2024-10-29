@@ -1,10 +1,10 @@
 package com.projetai.quality.ticket.application;
 
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.domain.Ticket;
-import com.projetai.quality.ticket.domain.status.TicketStatus;
-import com.projetai.quality.ticket.infra.TicketEntity;
-import com.projetai.quality.ticket.infra.TicketRepository;
+import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.core.infra.ticket.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

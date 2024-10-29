@@ -1,7 +1,7 @@
-package com.projetai.quality.ticket.infra;
+package com.projetai.core.infra.ticket;
 
-import com.projetai.quality.ticket.domain.status.TicketStatus;
-import com.projetai.quality.ticket.domain.type.TicketType;
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
+import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 import jakarta.persistence.*;
 
 @Entity(name = "ticket")

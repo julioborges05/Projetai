@@ -3,8 +3,9 @@ package com.projetai.quality.ticket.domain;
 
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
+import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 import com.projetai.core.infra.user.support.SupportEntity;
-import com.projetai.quality.ticket.domain.type.TicketType;
+
 import com.projetai.quality.ticket.infra.user.dev.Dev;
 import com.projetai.quality.ticket.infra.user.dev.DevEntity;
 
