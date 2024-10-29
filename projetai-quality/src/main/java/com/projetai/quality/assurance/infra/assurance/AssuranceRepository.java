@@ -1,4 +1,4 @@
-package com.projetai.quality.assurance.infra;
+package com.projetai.quality.assurance.infra.assurance;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
