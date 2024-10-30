@@ -3,24 +3,40 @@ package com.projetai.quality.ticket.domain;
 
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
+import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 import com.projetai.core.infra.user.support.SupportEntity;
 
+import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.user.dev.Dev;
 import com.projetai.quality.ticket.infra.user.dev.DevEntity;
 
-public class Ticket implements TicketInterface{
-    TicketType ticketType;
-    Dev dev;
+public class Ticket implements TicketInterface {
+    private final TicketType ticketType;
+    private final Dev dev;
+    private final Long contactId;
 
+    public Ticket(TicketType ticketType, Dev dev, Long contactId) {
+        this.ticketType = ticketType;
+        this.dev = dev;
+        this.contactId = contactId;
+    }
 
-    @Override
-    public String DefineTicketParameters(String parameters) {
-        return "";
+    public Ticket(TicketEntity ticketEntity) {
+        this.ticketType = ticketEntity.getTicketType();
+        this.contactId = ticketEntity.getContactId();
+//        this.dev = new Dev(ticketEntity.getUser());
+        //TODO: criar o dev a partir do banco
+        this.dev = new Dev("", "");
     }
 
     @Override
-    public NotificationEntity<DevEntity> SendNotificationToDev() {
+    public TicketEntity defineTicketParameters(TicketParametersDto parameters) {
+        return new TicketEntity(this.contactId);
+    }
+
+    @Override
+    public NotificationEntity<DevEntity> makeNotificationToDev() {
         String message = "You have a new ticket";
 
         return new NotificationEntityBuilder<DevEntity>()
@@ -32,17 +48,17 @@ public class Ticket implements TicketInterface{
     }
 
     @Override
-    public boolean AnalizeTicket() {
+    public boolean analizeTicket() {
         return false;
     }
 
     @Override
-    public void TicketFinished() {
+    public void ticketFinished() {
 
     }
 
     @Override
-    public NotificationEntity<SupportEntity> SendNotificationToSupport() {
+    public NotificationEntity<SupportEntity> sendNotificationToSupport() {
         return null;
     }
 }

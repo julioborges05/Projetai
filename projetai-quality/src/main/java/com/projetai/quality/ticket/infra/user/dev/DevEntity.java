@@ -1,12 +1,10 @@
 package com.projetai.quality.ticket.infra.user.dev;
 
-
 import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.UserInterface;
 import jakarta.persistence.*;
 
-
-@Entity(name = "Dev")
+@Entity(name = "developer")
 public class DevEntity extends UserEntity implements UserInterface {
 
     @Id

@@ -12,7 +12,7 @@ public class TicketEntity {
     private Long id;
     private String title;
     private String description;
-    private String user;
+    private Long userId;
     private String parameters;
 
     @Enumerated(EnumType.STRING)
@@ -20,7 +20,14 @@ public class TicketEntity {
 
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
+    private Long contactId;
 
+    public TicketEntity() {
+    }
+
+    public TicketEntity(Long contactId) {
+        this.contactId = contactId;
+    }
 
     public Long getId() {
         return id;
@@ -34,8 +41,8 @@ public class TicketEntity {
         return description;
     }
 
-    public String getUser() {
-        return user;
+    public Long getUser() {
+        return userId;
     }
 
     public TicketType getTicketType() {
@@ -58,8 +65,8 @@ public class TicketEntity {
         this.description = description;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser(Long userId) {
+        this.userId = userId;
     }
 
     public void setParameters(String parameters) {
@@ -74,8 +81,7 @@ public class TicketEntity {
         this.ticketStatus = ticketStatus;
     }
 
-    public TicketEntity() {
+    public Long getContactId() {
+        return contactId;
     }
-
-
 }

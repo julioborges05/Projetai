@@ -1,6 +1,7 @@
 package com.projetai.development.develop.application;
 
 import com.projetai.core.infra.notification.NotificationRepository;
+import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.development.develop.application.dto.DevelopmentDto;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.infra.development.DevelopmentEntity;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Service;
 public class DevelopmentService {
 
     private final DevelopmentRepository developmentRepository;
-    private final NotificationRepository notificationRepository;
+    private final NotificationRepository<SupportEntity> notificationRepository;
 
     @Autowired
-    public DevelopmentService(DevelopmentRepository developmentRepository, NotificationRepository notificationRepository) {
+    public DevelopmentService(DevelopmentRepository developmentRepository, NotificationRepository<SupportEntity> notificationRepository) {
         this.developmentRepository = developmentRepository;
         this.notificationRepository = notificationRepository;
     }

@@ -2,6 +2,7 @@ package com.projetai.quality.ticket.application;
 
 import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.application.dto.TicketDetailData;
+import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,17 +23,17 @@ public class TicketController {
 
     @GetMapping("/{id}")
     public ResponseEntity detailTicket(@PathVariable Long id) {
-        return ResponseEntity.ok(new TicketDetailData(ticketService.DetailTicket(id)));
+        return ResponseEntity.ok(new TicketDetailData(ticketService.detailTicket(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<GetAllTicketsData>> getAllTickets(@PageableDefault(size = 10, sort = {"TicketStatus"})Pageable pageable) {
-        return ResponseEntity.ok(ticketService.GetAllTickets(pageable));
+        return ResponseEntity.ok(ticketService.getAllTickets(pageable));
     }
 
     @PostMapping("/parameters")
-    public ResponseEntity addTicketParameters(@RequestBody Long id,String parameters) {
-        ticketService.addTicketParameters(parameters, id);
+    public ResponseEntity createTicketParameters(@RequestBody Long id, TicketParametersDto parameters) {
+        ticketService.createTicketParameters(parameters, id);
         return ResponseEntity.ok("Parameters set successfully");
     }
 
