@@ -1,9 +1,7 @@
-package com.projetai.development.utils.infra.user.developer;
+package com.projetai.core.infra.user.developer;
 
 import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.UserInterface;
-import com.projetai.development.develop.application.dto.DeveloperDto;
-import com.projetai.development.utils.domain.user.developer.Developer;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,24 +14,18 @@ public class DeveloperEntity extends UserEntity implements UserInterface {
     @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    public DeveloperEntity() {
+    public DeveloperEntity(Long id, String name, String email) {
+        super(name, email);
+        this.id = id;
     }
 
-    public DeveloperEntity(Developer developer) {
-        super(developer.getName(), developer.getEmail());
-    }
-
-    public DeveloperEntity(DeveloperDto developerDto) {
-        super(developerDto.name(), developerDto.email());
-        this.id = developerDto.id();
+    public DeveloperEntity(String name, String email) {
+        super(name, email);
+        this.id = id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Developer toDeveloper() {
-        return new Developer(name, email);
     }
 
     @Override

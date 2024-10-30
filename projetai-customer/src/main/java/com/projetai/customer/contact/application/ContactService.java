@@ -25,11 +25,11 @@ public class ContactService {
     private final ContactRepository contactRepository;
     private final SupportRepository supportRepository;
     private final ClientRepository clientRepository;
-    private final NotificationRepository notificationRepository;
+    private final NotificationRepository<SupportEntity> notificationRepository;
 
     @Autowired
     public ContactService(ContactRepository contactRepository, SupportRepository supportRepository,
-                          ClientRepository clientRepository, NotificationRepository notificationRepository) {
+                          ClientRepository clientRepository, NotificationRepository<SupportEntity> notificationRepository) {
         this.contactRepository = contactRepository;
         this.supportRepository = supportRepository;
         this.clientRepository = clientRepository;
