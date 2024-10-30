@@ -9,7 +9,7 @@ public record TicketDetailData(
         Long id,
         String title,
         String description,
-        String user,
+        Long user,
         TicketType ticketType,
         TicketStatus ticketStatus)
 {

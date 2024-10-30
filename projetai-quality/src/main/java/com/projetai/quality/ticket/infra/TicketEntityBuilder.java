@@ -16,7 +16,7 @@ public class TicketEntityBuilder {
         ticketEntity.setDescription(description);
         return this;
     }
-    public TicketEntityBuilder withUser(String user) {
+    public TicketEntityBuilder withUser(Long user) {
         ticketEntity.setUser(user);
         return this;
     }

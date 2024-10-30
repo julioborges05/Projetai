@@ -1,6 +1,7 @@
 package com.projetai.quality.ticket.infra.user.dev;
 
 import com.projetai.core.domain.user.User;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
 
 public class Dev extends User {
 
@@ -10,9 +11,13 @@ public class Dev extends User {
         super(name, email);
     }
 
-    public Dev(DevEntity devEntity) {
+    public Dev(DeveloperEntity devEntity) {
         super(devEntity.getName(), devEntity.getEmail());
         this.id = devEntity.getId();
+    }
+
+    public DeveloperEntity toEntity() {
+        return new DeveloperEntity(this.getName(), this.getEmail());
     }
 
     public Long getId() {

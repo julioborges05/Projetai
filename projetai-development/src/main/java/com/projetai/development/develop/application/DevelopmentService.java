@@ -8,8 +8,8 @@ import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.infra.development.DevelopmentEntity;
 import com.projetai.development.develop.infra.development.DevelopmentRepository;
 import com.projetai.development.utils.domain.user.developer.Developer;
-import com.projetai.development.utils.infra.user.developer.DeveloperEntity;
-import com.projetai.development.utils.infra.user.developer.DeveloperRepository;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class DevelopmentService {
 
     @Transactional
     public DeveloperDto createDeveloper(DeveloperDto developerDto) {
-        DeveloperEntity developer = new DeveloperEntity(developerDto);
+        DeveloperEntity developer = Developer.dtoToEntity(developerDto);
         developer.setId(null);
 
         return Developer.dbEntityToDto(developerRepository.save(developer));

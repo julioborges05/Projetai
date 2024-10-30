@@ -32,8 +32,8 @@ public class TicketController {
     }
 
     @PostMapping("/parameters")
-    public ResponseEntity createTicketParameters(@RequestBody Long id, TicketParametersDto parameters) {
-        ticketService.createTicketParameters(parameters, id);
+    public ResponseEntity createTicketParameters(@RequestBody TicketParametersDto parameters) {
+        ticketService.createTicketParameters(parameters);
         return ResponseEntity.ok("Parameters set successfully");
     }
 

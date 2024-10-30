@@ -1,16 +1,15 @@
 package com.projetai.quality.ticket.application;
 
-import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperRepository;
 import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.domain.Ticket;
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketRepository;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.user.dev.Dev;
-import com.projetai.quality.ticket.infra.user.dev.DevEntity;
-import com.projetai.quality.ticket.infra.user.dev.DevRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-    private final DevRepository devRepository;
-    private final NotificationRepository<DevEntity> notificationRepository;
+    private final DeveloperRepository devRepository;
+    private final NotificationRepository<DeveloperEntity> notificationRepository;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, DevRepository devRepository,
-                         NotificationRepository<DevEntity> notificationRepository) {
+    public TicketService(TicketRepository ticketRepository, DeveloperRepository devRepository,
+                         NotificationRepository<DeveloperEntity> notificationRepository) {
         this.ticketRepository = ticketRepository;
         this.devRepository = devRepository;
         this.notificationRepository = notificationRepository;
@@ -41,9 +40,9 @@ public class TicketService {
         return ticketRepository.findByTicketStatusNot(TicketStatus.FINISHED, pageable).map(GetAllTicketsData::new);
     }
 
-    public void createTicketParameters(TicketParametersDto parameters, Long contactId) {
+    public void createTicketParameters(TicketParametersDto parameters) {
         Dev developer = getDevForTicket(parameters);
-        Ticket ticket = createTicket(parameters, developer, contactId);
+        Ticket ticket = createTicket(parameters, developer);
         notificationRepository.save(ticket.makeNotificationToDev());
     }
 
@@ -51,8 +50,8 @@ public class TicketService {
         return new Dev(devRepository.findById(parameters.userNotifiedId()).orElseThrow());
     }
 
-    private Ticket createTicket(TicketParametersDto parameters, Dev developer, Long contactId) {
-        Ticket ticket = new Ticket(parameters.type(), developer, contactId);
+    private Ticket createTicket(TicketParametersDto parameters, Dev developer) {
+        Ticket ticket = new Ticket(parameters.type(), developer, parameters.contactId());
         ticketRepository.save(ticket.defineTicketParameters(parameters));
         return ticket;
     }

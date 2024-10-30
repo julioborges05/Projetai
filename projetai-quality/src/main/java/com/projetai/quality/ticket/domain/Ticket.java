@@ -5,11 +5,11 @@ import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.support.SupportEntity;
 
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.user.dev.Dev;
-import com.projetai.quality.ticket.infra.user.dev.DevEntity;
 
 public class Ticket implements TicketInterface {
     private final TicketType ticketType;
@@ -36,14 +36,14 @@ public class Ticket implements TicketInterface {
     }
 
     @Override
-    public NotificationEntity<DevEntity> makeNotificationToDev() {
+    public NotificationEntity<DeveloperEntity> makeNotificationToDev() {
         String message = "You have a new ticket";
 
-        return new NotificationEntityBuilder<DevEntity>()
+        return new NotificationEntityBuilder<DeveloperEntity>()
                 .withMessage(message)
                 .withTitle("New ticket")
                 .withType(this.ticketType.name())
-                .withUserEntity(new DevEntity(this.dev))
+                .withUserEntity(this.dev.toEntity())
                 .build();
     }
 
