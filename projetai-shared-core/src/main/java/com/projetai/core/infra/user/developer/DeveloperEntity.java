@@ -24,6 +24,8 @@ public class DeveloperEntity extends UserEntity implements UserInterface {
         this.id = id;
     }
 
+    public DeveloperEntity() { }
+
     public void setId(Long id) {
         this.id = id;
     }

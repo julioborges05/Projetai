@@ -1,6 +1,7 @@
 package com.projetai.quality.assurance.domain.assurance;
 
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
+import com.projetai.quality.assurance.infra.assurance.AssuranceEntity;
 import com.projetai.quality.assurance.infra.user.support.SupportEntity;
 import com.projetai.quality.assurance.infra.user.developer.DeveloperEntity;
 import com.projetai.quality.assurance.infra.user.client.ClientEntity;
@@ -24,25 +25,28 @@ public class Assurance {
         this.supportEntity = supportEntity;
     }
 
-    public AssuranceEntityBuilder startAssurance() {
+    public AssuranceEntity startAssurance() {
         return new AssuranceEntityBuilder()
                 .withProgress(AssuranceStatus.IN_PROGRESS)
                 .withDeveloperEntity(developerEntity)
-                .withSupportEntity(supportEntity);
+                .withSupportEntity(supportEntity)
+                .build();
     }
 
-    public AssuranceEntityBuilder todoAssurance() {
+    public AssuranceEntity todoAssurance() {
         return new AssuranceEntityBuilder()
                 .withProgress(AssuranceStatus.TODO)
                 .withDeveloperEntity(developerEntity)
-                .withSupportEntity(supportEntity);
+                .withSupportEntity(supportEntity)
+                .build();
     }
 
-    public AssuranceEntityBuilder completeAssurance() {
+    public AssuranceEntity completeAssurance() {
         return new AssuranceEntityBuilder()
                 .withProgress(AssuranceStatus.FINISHED)
                 .withDeveloperEntity(developerEntity)
-                .withSupportEntity(supportEntity);
+                .withSupportEntity(supportEntity)
+                .build();
     }
 
     public NotificationEntity<SupportEntity> makeNotificationSupport() {
