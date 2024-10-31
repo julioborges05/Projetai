@@ -1,7 +1,7 @@
 package com.projetai.development.utils.application.developer;
 
-import com.projetai.development.utils.infra.user.developer.DeveloperEntity;
-import com.projetai.development.utils.infra.user.developer.DeveloperRepository;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

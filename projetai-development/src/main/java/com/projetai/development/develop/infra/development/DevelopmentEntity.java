@@ -4,7 +4,7 @@ import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
 import com.projetai.development.develop.domain.development.type.DevelopmentType;
-import com.projetai.development.utils.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
 import jakarta.persistence.*;
 
 @Entity

@@ -9,7 +9,7 @@ import com.projetai.development.refinement.infra.user.techLead.TechLeadEntity;
 import com.projetai.development.utils.application.developer.DeveloperService;
 import com.projetai.development.utils.exceptions.RefinementNotFoundException;
 import com.projetai.development.utils.exceptions.UserNotFoundException;
-import com.projetai.development.utils.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
