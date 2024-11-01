@@ -6,6 +6,7 @@ create table if not exists ticket (
     client_id bigint not null,
     contact_id bigint not null,
     description varchar(255) not null,
+    status varchar(255) not null,
     foreign key (client_id) references users(id),
     constraint ticket_pk primary key (id),
     constraint ticket_contact_fk foreign key (contact_id) references contact(id)

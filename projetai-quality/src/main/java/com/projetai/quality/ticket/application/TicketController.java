@@ -22,7 +22,7 @@ public class TicketController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detailTicket(@PathVariable Long id) {
+    public ResponseEntity<TicketDetailData> detailTicket(@PathVariable Long id) {
         return ResponseEntity.ok(new TicketDetailData(ticketService.detailTicket(id)));
     }
 
@@ -32,7 +32,7 @@ public class TicketController {
     }
 
     @PostMapping("/parameters")
-    public ResponseEntity createTicketParameters(@RequestBody TicketParametersDto parameters) {
+    public ResponseEntity<String> createTicketParameters(@RequestBody TicketParametersDto parameters) {
         ticketService.createTicketParameters(parameters);
         return ResponseEntity.ok("Parameters set successfully");
     }

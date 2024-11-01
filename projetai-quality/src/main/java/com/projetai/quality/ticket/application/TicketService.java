@@ -10,6 +10,7 @@ import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketRepository;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.user.dev.Dev;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,22 +37,24 @@ public class TicketService {
     }
 
     //Return a page with 10 first tickets
-    public Page getAllTickets(Pageable pageable){
+    public Page<GetAllTicketsData> getAllTickets(Pageable pageable){
         return ticketRepository.findByTicketStatusNot(TicketStatus.FINISHED, pageable).map(GetAllTicketsData::new);
     }
 
+    @Transactional
     public void createTicketParameters(TicketParametersDto parameters) {
-        Dev developer = getDevForTicket(parameters);
+        DeveloperEntity developer = getDevForTicket(parameters);
         Ticket ticket = createTicket(parameters, developer);
-        notificationRepository.save(ticket.makeNotificationToDev());
+        //notificationRepository.save(ticket.makeNotificationToDev());
     }
 
-    private Dev getDevForTicket(TicketParametersDto parameters) {
-        return new Dev(devRepository.findById(parameters.userNotifiedId()).orElseThrow());
+    @Transactional
+    public DeveloperEntity getDevForTicket(TicketParametersDto parameters) {
+        return new DeveloperEntity(devRepository.findById(parameters.userNotifiedId()).orElseThrow());
     }
-
-    private Ticket createTicket(TicketParametersDto parameters, Dev developer) {
-        Ticket ticket = new Ticket(parameters.type(), developer, parameters.contactId());
+    @Transactional
+    public Ticket createTicket(TicketParametersDto parameters, DeveloperEntity developer) {
+        Ticket ticket = new Ticket(parameters.type(), developer, parameters.contactId(), parameters.title());
         ticketRepository.save(ticket.defineTicketParameters(parameters));
         return ticket;
     }
