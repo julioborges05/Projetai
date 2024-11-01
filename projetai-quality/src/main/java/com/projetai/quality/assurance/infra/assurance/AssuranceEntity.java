@@ -2,11 +2,11 @@ package com.projetai.quality.assurance.infra.assurance;
 
 import com.projetai.quality.assurance.domain.assurance.Assurance;
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
-import com.projetai.quality.assurance.infra.user.developer.DeveloperEntity;
-import com.projetai.quality.assurance.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name="assurance")
 public class AssuranceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

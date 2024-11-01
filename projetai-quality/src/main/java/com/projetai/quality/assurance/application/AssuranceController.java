@@ -16,15 +16,13 @@ public class AssuranceController {
         this.assuranceService = assuranceService;
     }
 
-    @PostMapping
-    @RequestMapping("/start-assurance")
+    @PostMapping("/start-assurance")
     public ResponseEntity<String> startAssurance(@RequestBody AssuranceDto assuranceDto) {
         assuranceService.startAssurance(assuranceDto);
         return ResponseEntity.ok("Assurance started");
     }
 
-    @PostMapping
-    @RequestMapping("/complete-assurance")
+    @PostMapping("/complete-assurance")
     public ResponseEntity<String> completeAssurance(@RequestBody AssuranceDto assuranceDto) {
         assuranceService.completeAssurance(assuranceDto);
         return ResponseEntity.ok("Assurance completed");

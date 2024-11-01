@@ -1,8 +1,8 @@
 package com.projetai.quality.assurance.infra.assurance;
 
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
-import com.projetai.quality.assurance.infra.user.developer.DeveloperEntity;
-import com.projetai.quality.assurance.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.support.SupportEntity;
 
 public class AssuranceEntityBuilder {
     private final AssuranceEntity assuranceEntity = new AssuranceEntity();

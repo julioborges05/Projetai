@@ -5,11 +5,10 @@ import com.projetai.quality.assurance.domain.assurance.Assurance;
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
 import com.projetai.quality.assurance.infra.assurance.AssuranceEntity;
 import com.projetai.quality.assurance.infra.assurance.AssuranceRepository;
-import com.projetai.quality.assurance.infra.user.client.ClientRepository;
-import com.projetai.quality.assurance.infra.user.developer.DeveloperEntity;
-import com.projetai.quality.assurance.infra.user.developer.DeveloperRepository;
-import com.projetai.quality.assurance.infra.user.support.SupportEntity;
-import com.projetai.quality.assurance.infra.user.support.SupportRepository;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.core.infra.user.developer.DeveloperRepository;
+import com.projetai.core.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.support.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +33,7 @@ public class AssuranceService {
         return assuranceRepository.getReferenceById(id);
     }
 
-    public Page getAllAssurance(Pageable pageable){
+    public Page<AssuranceEntity> getAllAssurance(Pageable pageable){
         return assuranceRepository.findByAssuranceStatus(AssuranceStatus.ON_HOLD, pageable);
     }
 
