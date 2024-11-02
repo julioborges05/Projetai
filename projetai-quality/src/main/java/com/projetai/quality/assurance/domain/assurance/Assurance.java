@@ -26,6 +26,8 @@ public class Assurance {
 
     public AssuranceEntity startAssurance() {
         return new AssuranceEntityBuilder()
+                .withTitle(title)
+                .withMessage(message)
                 .withProgress(AssuranceStatus.IN_PROGRESS)
                 .withDeveloperEntity(developerEntity)
                 .withSupportEntity(supportEntity)
@@ -34,7 +36,9 @@ public class Assurance {
 
     public AssuranceEntity todoAssurance() {
         return new AssuranceEntityBuilder()
-                .withProgress(AssuranceStatus.TODO)
+                .withTitle(title)
+                .withMessage(message)
+                .withProgress(status)
                 .withDeveloperEntity(developerEntity)
                 .withSupportEntity(supportEntity)
                 .build();
@@ -42,17 +46,11 @@ public class Assurance {
 
     public AssuranceEntity completeAssurance() {
         return new AssuranceEntityBuilder()
-                .withProgress(AssuranceStatus.FINISHED)
+                .withTitle(title)
+                .withMessage(message)
+                .withProgress(status)
                 .withDeveloperEntity(developerEntity)
                 .withSupportEntity(supportEntity)
                 .build();
-    }
-
-    public NotificationEntity<SupportEntity> makeNotificationSupport() {
-        return null;
-    }
-
-    public NotificationEntity<DeveloperEntity> makeNotificationDeveloper() {
-        return null;
     }
 }

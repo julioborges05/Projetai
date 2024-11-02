@@ -13,6 +13,7 @@ import com.projetai.core.infra.user.support.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,12 +31,17 @@ public class AssuranceService {
         this.developerRepository = developerRepository;
     }
 
-    public AssuranceEntity findAssurance(Long id){
-        return assuranceRepository.getReferenceById(id);
+    public AssuranceEntity findAssurance(Long id) throws Exception{
+        Optional<AssuranceEntity> assurance = assuranceRepository.findById(id);
+        if(assurance.isEmpty()){
+            throw new Exception("Assurance not found");
+        }
+
+        return assurance.get();
     }
 
     public Page<AssuranceDto> findAllAssurance(Pageable pageable){
-        return assuranceRepository.findByAssuranceStatus(AssuranceStatus.ON_HOLD, pageable).map(AssuranceDto::new);
+        return assuranceRepository.findAll(pageable).map(AssuranceDto::new);
     }
 
     public void startAssurance(AssuranceDto assuranceDto) {
@@ -49,14 +55,27 @@ public class AssuranceService {
         assuranceRepository.save(assurance.startAssurance());
     }
 
-    public void completeAssurance(AssuranceDto assuranceDto) {
-        Optional<SupportEntity> supportEntity = supportRepository.findById(assuranceDto.supportId());
-        Optional<DeveloperEntity> developerEntity = developerRepository.findById(assuranceDto.developerId());
-        if(supportEntity.isEmpty() || developerEntity.isEmpty()){
-            throw new UserNotFoundException("User not found");
+    public void necessaryAdjustmentsAssurance(AssuranceDto assuranceDto) {
+        Optional<AssuranceEntity> assuranceEntityOptional = assuranceRepository.findById(assuranceDto.id());
+        if(assuranceEntityOptional.isEmpty()){
+            throw new UserNotFoundException("Assurance not found");
         }
 
-        Assurance assurance = new Assurance(assuranceDto.id(), assuranceDto.title(), assuranceDto.message(), AssuranceStatus.FINISHED, developerEntity.get(), supportEntity.get());
-        assuranceRepository.save(assurance.completeAssurance());
+        AssuranceEntity assuranceEntity = assuranceEntityOptional.get();
+        assuranceEntity.setMessage(assuranceDto.message());
+        assuranceEntity.setStatus(AssuranceStatus.TODO);
+        assuranceRepository.save(assuranceEntity);
+    }
+
+    public void completeAssurance(AssuranceDto assuranceDto) {
+        Optional<AssuranceEntity> assuranceEntityOptional = assuranceRepository.findById(assuranceDto.id());
+        if(assuranceEntityOptional.isEmpty()){
+            throw new UserNotFoundException("Assurance not found");
+        }
+
+        AssuranceEntity assuranceEntity = assuranceEntityOptional.get();
+        assuranceEntity.setMessage(assuranceDto.message());
+        assuranceEntity.setStatus(AssuranceStatus.FINISHED);
+        assuranceRepository.save(assuranceEntity);
     }
 }

@@ -19,22 +19,28 @@ public class AssuranceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssuranceDto> findAssuranceById(@PathVariable Long id) {
+    public ResponseEntity<AssuranceDto> findAssuranceById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(new AssuranceDto(assuranceService.findAssurance(id)));
     }
 
     @GetMapping("/assurances")
-    public ResponseEntity<Page<AssuranceDto>> findAllAssurance(@PageableDefault(sort = {"AssuranceStatus"}) Pageable pageable) {
+    public ResponseEntity<Page<AssuranceDto>> findAllAssurance(@PageableDefault(sort = {"status"}) Pageable pageable) {
         return ResponseEntity.ok(assuranceService.findAllAssurance(pageable));
     }
 
-    @PostMapping("/start-assurance")
+    @PostMapping("/startAssurance")
     public ResponseEntity<String> startAssurance(@RequestBody AssuranceDto assuranceDto) {
         assuranceService.startAssurance(assuranceDto);
         return ResponseEntity.ok("Assurance started");
     }
 
-    @PostMapping("/complete-assurance")
+    @PostMapping("/necessaryAdjustmentsAssurance")
+    public ResponseEntity<String> necessaryAdjustmentsAssurance(@RequestBody AssuranceDto assuranceDto) {
+        assuranceService.necessaryAdjustmentsAssurance(assuranceDto);
+        return ResponseEntity.ok("Assurance with adjustment");
+    }
+
+    @PostMapping("/completeAssurance")
     public ResponseEntity<String> completeAssurance(@RequestBody AssuranceDto assuranceDto) {
         assuranceService.completeAssurance(assuranceDto);
         return ResponseEntity.ok("Assurance completed");
