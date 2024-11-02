@@ -9,11 +9,10 @@ public record TicketDetailData(
         Long id,
         String title,
         String description,
-        Long user,
         TicketType ticketType,
         TicketStatus ticketStatus)
 {
     public TicketDetailData (TicketEntity ticketEntity) {
-        this(ticketEntity.getId(), ticketEntity.getTitle(), ticketEntity.getDescription(), ticketEntity.getUser(), ticketEntity.getTicketType(), ticketEntity.getTicketStatus());
+        this(ticketEntity.getId(), ticketEntity.getTitle(), ticketEntity.getDescription(), ticketEntity.getTicketType(), ticketEntity.getTicketStatus());
     }
 }

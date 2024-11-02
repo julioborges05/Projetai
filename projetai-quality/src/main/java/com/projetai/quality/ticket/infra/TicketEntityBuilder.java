@@ -16,20 +16,25 @@ public class TicketEntityBuilder {
         ticketEntity.setDescription(description);
         return this;
     }
-    public TicketEntityBuilder withUser(Long user) {
-        ticketEntity.setUser(user);
-        return this;
-    }
-    public TicketEntityBuilder withParameters(String parameters) {
-        ticketEntity.setParameters(parameters);
-        return this;
-    }
+
     public TicketEntityBuilder withTicketType(TicketType ticketType) {
         ticketEntity.setTicketType(ticketType);
         return this;
     }
     public TicketEntityBuilder withTicketStatus(TicketStatus ticketStatus) {
         ticketEntity.setTicketStatus(ticketStatus);
+        return this;
+    }
+    public TicketEntityBuilder withContactId(Long contadId){
+        ticketEntity.setContactId(contadId);
+        return this;
+    }
+    public TicketEntityBuilder withMessage(String message){
+        ticketEntity.setMessage(message);
+        return this;
+    }
+    public TicketEntityBuilder withAuthorId(Long authorId){
+        ticketEntity.setClientId(authorId);
         return this;
     }
 

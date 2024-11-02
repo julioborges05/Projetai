@@ -50,5 +50,4 @@ public class ContactController {
         contactService.makeContact(contactDto);
         return ResponseEntity.ok("Contact made successfully");
     }
-
 }
