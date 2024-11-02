@@ -1,5 +1,6 @@
 package com.projetai.quality.assurance.application;
 
+import com.projetai.development.utils.exceptions.UserNotFoundException;
 import com.projetai.quality.assurance.application.dto.AssuranceDto;
 import com.projetai.quality.assurance.domain.assurance.Assurance;
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
@@ -29,19 +30,19 @@ public class AssuranceService {
         this.developerRepository = developerRepository;
     }
 
-    public AssuranceEntity detailAssurance(Long id){
+    public AssuranceEntity findAssurance(Long id){
         return assuranceRepository.getReferenceById(id);
     }
 
-    public Page<AssuranceEntity> getAllAssurance(Pageable pageable){
-        return assuranceRepository.findByAssuranceStatus(AssuranceStatus.ON_HOLD, pageable);
+    public Page<AssuranceDto> findAllAssurance(Pageable pageable){
+        return assuranceRepository.findByAssuranceStatus(AssuranceStatus.ON_HOLD, pageable).map(AssuranceDto::new);
     }
 
     public void startAssurance(AssuranceDto assuranceDto) {
         Optional<SupportEntity> supportEntity = supportRepository.findById(assuranceDto.supportId());
         Optional<DeveloperEntity> developerEntity = developerRepository.findById(assuranceDto.developerId());
         if(supportEntity.isEmpty() || developerEntity.isEmpty()){
-            //throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         Assurance assurance = new Assurance(assuranceDto.id(), assuranceDto.title(), assuranceDto.message(), AssuranceStatus.ON_HOLD, developerEntity.get(), supportEntity.get());
@@ -52,7 +53,7 @@ public class AssuranceService {
         Optional<SupportEntity> supportEntity = supportRepository.findById(assuranceDto.supportId());
         Optional<DeveloperEntity> developerEntity = developerRepository.findById(assuranceDto.developerId());
         if(supportEntity.isEmpty() || developerEntity.isEmpty()){
-            //throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         Assurance assurance = new Assurance(assuranceDto.id(), assuranceDto.title(), assuranceDto.message(), AssuranceStatus.FINISHED, developerEntity.get(), supportEntity.get());
