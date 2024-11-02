@@ -9,6 +9,7 @@ import com.projetai.customer.contact.application.dto.ClientDto;
 import com.projetai.customer.contact.application.dto.ContactDto;
 import com.projetai.customer.contact.domain.client.Client;
 import com.projetai.customer.contact.domain.contact.Contact;
+import com.projetai.customer.contact.infra.contact.ContactEntity;
 import com.projetai.customer.contact.infra.contact.ContactRepository;
 import com.projetai.customer.contact.infra.user.client.ClientEntity;
 import com.projetai.customer.contact.infra.user.client.ClientRepository;
@@ -77,18 +78,18 @@ public class ContactService {
         return Client.dbEntityToDto(clientRepository.save(client));
     }
 
-    public List<SupportDto> findAllSupports() {
-        return supportRepository.findAll()
-                .stream()
-                .map(Support::dbEntityToDto)
-                .collect(Collectors.toList());
+    public ContactDto findContact(Long id) {
+        ContactEntity contactEntity = contactRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+
+        return new ContactDto(contactEntity);
     }
 
-    @Transactional
-    public SupportDto createSupport(SupportDto supportDto) {
-        SupportEntity support = new SupportEntity(supportDto);
-        support.setId(null);
+    public List<ContactDto> findAll() {
+        List<ContactEntity> contacts = contactRepository.findAll();
 
-        return Support.dbEntityToDto(supportRepository.save(support));
+        return contacts.stream()
+                .map(ContactDto::new)
+                .collect(Collectors.toList());
     }
 }

@@ -17,15 +17,13 @@ public class RefinementController {
         this.refinementService = refinementService;
     }
 
-    @PostMapping
-    @RequestMapping("/start-refinement")
+    @PostMapping("/start-refinement")
     public ResponseEntity<String> startRefinement(@RequestBody RefinementDto refinementDto) {
         refinementService.startRefinement(refinementDto);
         return ResponseEntity.ok("Refinement started");
     }
 
-    @PostMapping
-    @RequestMapping("/complete-refinement")
+    @PostMapping("/complete-refinement")
     public ResponseEntity<String> completeRefinement(@RequestBody RefinementDto refinementDto) {
         refinementService.completeRefinement(refinementDto);
         return ResponseEntity.ok("Refinement started");

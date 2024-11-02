@@ -1,5 +1,6 @@
 package com.projetai.customer.contact.domain.contact;
 
+import com.projetai.customer.contact.application.dto.ClientDto;
 import com.projetai.customer.contact.application.dto.ContactDto;
 import com.projetai.customer.contact.domain.client.Client;
 import com.projetai.core.domain.user.support.Support;
@@ -50,11 +51,6 @@ public class Contact implements ContactInterface {
                 .withType(this.type.name())
                 .withUserEntity(new SupportEntity(this.support))
                 .build();
-    }
-
-    @Override
-    public ContactEntity findContact() {
-        return null;
     }
 
     @Override

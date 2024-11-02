@@ -22,6 +22,18 @@ public class SupportEntity extends UserEntity implements UserInterface {
     public SupportEntity() {
     }
 
+    public SupportEntity(Support support) {
+        super(support.getName(), support.getEmail());
+        this.isAvailable = support.isAvailable();
+        this.id = support.getId();
+    }
+
+    public SupportEntity(SupportDto supportDto) {
+        super(supportDto.name(), supportDto.email());
+        this.id = supportDto.id();
+        this.isAvailable = supportDto.isAvailable();
+    }
+
     @Override
     public Long getId() {
         return this.id;
@@ -33,18 +45,6 @@ public class SupportEntity extends UserEntity implements UserInterface {
 
     public boolean getIsAvailable() {
         return this.isAvailable;
-    }
-
-    public SupportEntity(Support support) {
-        super(support.getName(), support.getEmail());
-        this.isAvailable = support.isAvailable();
-        this.id = support.getId();
-    }
-
-    public SupportEntity(SupportDto supportDto) {
-        super(supportDto.name(), supportDto.email());
-        this.id = supportDto.id();
-        this.isAvailable = supportDto.isAvailable();
     }
 
     @Override

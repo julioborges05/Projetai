@@ -46,6 +46,30 @@ public class ContactEntity {
         this.supportEntity = supportEntity;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ContactType getType() {
+        return type;
+    }
+
+    public ClientEntity getClientEntity() {
+        return clientEntity;
+    }
+
+    public SupportEntity getSupportEntity() {
+        return supportEntity;
+    }
+
     @Override
     public String toString() {
         return "ContactEntity{" +
