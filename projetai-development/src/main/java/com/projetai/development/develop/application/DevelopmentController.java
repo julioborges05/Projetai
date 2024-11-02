@@ -17,28 +17,18 @@ public class DevelopmentController {
         this.developmentService = developmentService;
     }
 
-    @PostMapping
-    @RequestMapping("/createDeveloper")
+    @PostMapping("/createDeveloper")
     public ResponseEntity<DeveloperDto> createDeveloper(@RequestBody DeveloperDto developerDto) {
         return ResponseEntity.ok(developmentService.createDeveloper(developerDto));
     }
 
-    @PostMapping
-    @RequestMapping("/startDevelopment")
+    @PostMapping("/startDevelopment")
     public ResponseEntity<String> startDevelopment(@RequestBody DevelopmentDto developmentDto) {
         developmentService.startDevelopment(developmentDto);
         return ResponseEntity.ok("Development started");
     }
 
-    @PutMapping
-    @RequestMapping("/addDetailsDevelopment")
-    public ResponseEntity<String> addDetails(@RequestBody DevelopmentDto developmentDto) {
-        developmentService.addDetails(developmentDto);
-        return ResponseEntity.ok("Development details added");
-    }
-
-    @PostMapping
-    @RequestMapping("/completeDevelopment")
+    @PostMapping("/completeDevelopment")
     public ResponseEntity<String> completeDevelopment(@RequestBody DevelopmentDto developmentDto) {
         developmentService.completeDevelopment(developmentDto);
         return ResponseEntity.ok("Development completed");

@@ -88,4 +88,30 @@ create trigger after_developer_insert
     for each row
 execute function insert_user_from_developer();
 
+---- techLead table
+
+create table if not exists techLead
+(
+    id    bigint default nextval('users_id_seq') not null,
+    name  varchar(255)                           not null,
+    email varchar(255)                           not null,
+    constraint techLead_pk primary key (id)
+);
+
+create or replace function insert_user_from_techLead()
+    returns trigger as
+$$
+begin
+    insert into users (id, name, email, user_type)
+    values (new.id, new.name, new.email, 'TECH_LEAD');
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger after_techLead_insert
+    after insert
+    on techLead
+    for each row
+execute function insert_user_from_techLead();
+
 

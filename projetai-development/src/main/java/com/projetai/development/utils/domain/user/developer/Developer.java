@@ -14,10 +14,6 @@ public class Developer extends User {
         return new DeveloperDto(developer.getId(), developer.getName(), developer.getEmail());
     }
     
-    public static DeveloperEntity toEntity(Developer developer) {
-        return new DeveloperEntity(developer.getName(), developer.getEmail());
-    }
-    
     public static DeveloperEntity dtoToEntity(DeveloperDto developer) {
         return new DeveloperEntity(developer.id(), developer.name(), developer.email());
     }

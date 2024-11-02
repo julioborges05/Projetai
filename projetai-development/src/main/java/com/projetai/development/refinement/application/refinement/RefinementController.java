@@ -1,6 +1,7 @@
 package com.projetai.development.refinement.application.refinement;
 
 import com.projetai.development.refinement.application.dto.RefinementDto;
+import com.projetai.development.refinement.application.dto.TechLeadDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,15 +18,18 @@ public class RefinementController {
         this.refinementService = refinementService;
     }
 
-    @PostMapping
-    @RequestMapping("/start-refinement")
+    @PostMapping("/createTechLead")
+    public ResponseEntity<TechLeadDto> createTechLead(@RequestBody TechLeadDto techLeadDto) {
+        return ResponseEntity.ok(refinementService.createTechLead(techLeadDto));
+    }
+
+    @PostMapping("/startRefinement")
     public ResponseEntity<String> startRefinement(@RequestBody RefinementDto refinementDto) {
         refinementService.startRefinement(refinementDto);
         return ResponseEntity.ok("Refinement started");
     }
 
-    @PostMapping
-    @RequestMapping("/complete-refinement")
+    @PostMapping("/completeRefinement")
     public ResponseEntity<String> completeRefinement(@RequestBody RefinementDto refinementDto) {
         refinementService.completeRefinement(refinementDto);
         return ResponseEntity.ok("Refinement started");

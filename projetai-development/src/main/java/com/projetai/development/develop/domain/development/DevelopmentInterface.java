@@ -1,8 +1,17 @@
 package com.projetai.development.develop.domain.development;
 
-import com.projetai.development.develop.application.dto.DevelopmentDto;
+import com.projetai.core.infra.notification.NotificationEntity;
+import com.projetai.core.infra.user.developer.DeveloperEntity;
+import com.projetai.development.develop.infra.development.DevelopmentEntity;
+import com.projetai.development.refinement.infra.user.techLead.TechLeadEntity;
 
 public interface DevelopmentInterface {
 
-    Development startDevelopment(DevelopmentDto developmentDto);
+    DevelopmentEntity startDevelopment();
+
+    DevelopmentEntity completeDevelopment();
+
+    NotificationEntity<DeveloperEntity> makeNotificationToDev(String necessaryAdjustments, DeveloperEntity developer);
+
+    NotificationEntity<TechLeadEntity> makeNotificationToTechLead();
 }

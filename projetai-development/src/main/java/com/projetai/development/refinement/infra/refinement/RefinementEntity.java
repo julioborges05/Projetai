@@ -1,9 +1,8 @@
 package com.projetai.development.refinement.infra.refinement;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.development.refinement.application.dto.RefinementDto;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -19,25 +18,39 @@ public class RefinementEntity {
 
     private String necessaryAdjustments;
 
-    private String techLeadUsername;
+    private Long techLeadId;
 
-    private String developerUsername;
+    private Long developerId;
 
     private LocalDateTime startedTime;
 
     private LocalDateTime finishedTime;
 
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private TicketEntity ticketEntity;
+
     public RefinementEntity() {}
 
-    public RefinementEntity(Long id, boolean isApproved, String necessaryAdjustments, String techLeadUsername,
-                            String developerUsername, LocalDateTime startedTime, LocalDateTime finishedTime) {
+    public RefinementEntity(Long id, boolean isApproved, String necessaryAdjustments, Long techLeadId,
+                            Long developerId, LocalDateTime startedTime, LocalDateTime finishedTime,
+                            TicketEntity ticketEntity) {
         this.id = id;
         this.isApproved = isApproved;
         this.necessaryAdjustments = necessaryAdjustments;
-        this.techLeadUsername = techLeadUsername;
-        this.developerUsername = developerUsername;
+        this.techLeadId = techLeadId;
+        this.developerId = developerId;
         this.startedTime = startedTime;
         this.finishedTime = finishedTime;
+        this.ticketEntity = ticketEntity;
+    }
+
+    public RefinementEntity(RefinementDto refinementDto) {
+        this.id = refinementDto.id();
+        this.isApproved = refinementDto.isApproved();
+        this.necessaryAdjustments = refinementDto.necessaryAdjustments();
+        this.techLeadId = refinementDto.techLeadId();
+        this.developerId = refinementDto.developerId();
     }
 
     public Long getId() {
@@ -64,20 +77,20 @@ public class RefinementEntity {
         this.necessaryAdjustments = necessaryAdjustments;
     }
 
-    public String getTechLeadUsername() {
-        return techLeadUsername;
+    public Long getTechLeadId() {
+        return techLeadId;
     }
 
-    public void setTechLeadUsername(String techLeadUsername) {
-        this.techLeadUsername = techLeadUsername;
+    public void setTechLeadId(Long techLeadId) {
+        this.techLeadId = techLeadId;
     }
 
-    public String getDeveloperUsername() {
-        return developerUsername;
+    public Long getDeveloperId() {
+        return developerId;
     }
 
-    public void setDeveloperUsername(String developerUsername) {
-        this.developerUsername = developerUsername;
+    public void setDeveloperId(Long developerId) {
+        this.developerId = developerId;
     }
 
     public LocalDateTime getStartedTime() {
@@ -96,6 +109,14 @@ public class RefinementEntity {
         this.finishedTime = finishedTime;
     }
 
+    public TicketEntity getTicketEntity() {
+        return ticketEntity;
+    }
+
+    public void setTicketEntity(TicketEntity ticketEntity) {
+        this.ticketEntity = ticketEntity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,14 +128,16 @@ public class RefinementEntity {
         return isApproved == that.isApproved
                 && Objects.equals(id, that.id)
                 && Objects.equals(necessaryAdjustments, that.necessaryAdjustments)
-                && Objects.equals(techLeadUsername, that.techLeadUsername)
-                && Objects.equals(developerUsername, that.developerUsername)
+                && Objects.equals(techLeadId, that.techLeadId)
+                && Objects.equals(developerId, that.developerId)
                 && Objects.equals(startedTime, that.startedTime)
-                && Objects.equals(finishedTime, that.finishedTime);
+                && Objects.equals(finishedTime, that.finishedTime)
+                && Objects.equals(ticketEntity, that.ticketEntity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadUsername, developerUsername, startedTime, finishedTime);
+        return Objects.hash(id, isApproved, necessaryAdjustments, techLeadId,
+                developerId, startedTime, finishedTime, ticketEntity);
     }
 }
