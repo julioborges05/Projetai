@@ -1,7 +1,6 @@
 create table if not exists ticket (
     id bigint,
     title varchar(255) not null,
-    message varchar(255) not null,
     type varchar(255) not null,
     client_id bigint not null,
     contact_id bigint not null,

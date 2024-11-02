@@ -4,14 +4,12 @@ package com.projetai.quality.ticket.domain;
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.core.infra.ticket.TicketEntity;
-import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.support.SupportEntity;
 
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.TicketEntityBuilder;
-import com.projetai.quality.ticket.infra.user.dev.Dev;
 
 public class Ticket implements TicketInterface {
 
@@ -20,20 +18,11 @@ public class Ticket implements TicketInterface {
     private final Long contactId;
     private final String title;
 
-
-    public Ticket(TicketType ticketType, DeveloperEntity dev, Long contactId, String title) {
-        this.ticketType = ticketType;
+    public Ticket(TicketParametersDto parameters, DeveloperEntity dev) {
+        this.ticketType = parameters.type();
         this.dev = dev;
-        this.contactId = contactId;
-        this.title = title;
-    }
-
-    public Ticket(TicketEntity ticketEntity) {
-        this.ticketType = ticketEntity.getTicketType();
-        this.contactId = ticketEntity.getContactId();
-        this.title = ticketEntity.getTitle();
-        //TODO: criar o dev a partir do banco
-        this.dev = new DeveloperEntity("João", "191");
+        this.contactId = parameters.contactId();
+        this.title = parameters.title();
     }
 
     @Override
@@ -42,8 +31,7 @@ public class Ticket implements TicketInterface {
                 .withDescription(parameters.description())
                 .withTitle(parameters.title())
                 .withContactId(parameters.contactId())
-                .withMessage(parameters.message())
-                .withAuthorId(parameters.authorId())
+                .withClientId(parameters.clientId())
                 .withTicketStatus(parameters.status())
                 .build();
     }

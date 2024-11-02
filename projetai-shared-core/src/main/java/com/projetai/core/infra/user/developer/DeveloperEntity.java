@@ -18,24 +18,23 @@ public class DeveloperEntity extends UserEntity implements UserInterface {
         super(name, email);
         this.id = id;
     }
+
+    public DeveloperEntity(String name, String email) {
+        super(name, email);
+    }
+
     public DeveloperEntity(DeveloperEntity developerEntityEntity) {
         super(developerEntityEntity.getName(), developerEntityEntity.getEmail());
         this.id = developerEntityEntity.getId();
     }
 
-    public DeveloperEntity(String name, String email) {
-        super(name, email);
-        this.id = id;
-    }
     public DeveloperEntity() {
 
     }
 
     public DeveloperEntity toEntity() {
-        return new DeveloperEntity(this.getName(), this.getEmail());
+        return new DeveloperEntity(this.id, this.getName(), this.getEmail());
     }
-
-    public DeveloperEntity() { }
 
     public void setId(Long id) {
         this.id = id;

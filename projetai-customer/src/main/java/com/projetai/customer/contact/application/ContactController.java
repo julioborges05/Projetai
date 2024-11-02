@@ -20,34 +20,31 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @GetMapping
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public ResponseEntity<List<ClientDto>> findAllClients() {
         return ResponseEntity.ok(contactService.findAllClients());
     }
 
-    @PostMapping
-    @RequestMapping("/createClient")
+    @PostMapping("/createClient")
     public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto clientDto) {
         return ResponseEntity.ok(contactService.createClient(clientDto));
     }
 
-    @GetMapping
-    @RequestMapping("/support")
+    @GetMapping("/support")
     public ResponseEntity<List<SupportDto>> findAllSupports() {
         return ResponseEntity.ok(contactService.findAllSupports());
     }
 
-    @PostMapping
-    @RequestMapping("/createSupport")
+    @PostMapping("/createSupport")
     public ResponseEntity<SupportDto> createSupport(@RequestBody SupportDto supportDto) {
         return ResponseEntity.ok(contactService.createSupport(supportDto));
     }
 
-    @PostMapping
-    @RequestMapping("/makeContact")
+    @PostMapping("/makeContact")
     public ResponseEntity<String> contact(@RequestBody ContactDto contactDto) {
         contactService.makeContact(contactDto);
         return ResponseEntity.ok("Contact made successfully");
     }
+
+
 }

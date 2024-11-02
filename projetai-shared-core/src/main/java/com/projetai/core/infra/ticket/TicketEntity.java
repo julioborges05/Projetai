@@ -14,11 +14,13 @@ public class TicketEntity {
     @SequenceGenerator(name = "ticket_id_seq", sequenceName = "ticket_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "ticket_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
+
     private String title;
+
     private String description;
+
     @Column(name = "client_id")
     private Long clientId;
-    private String message;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
@@ -27,14 +29,11 @@ public class TicketEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private TicketStatus ticketStatus;
+
     @Column(name = "contact_id")
     private Long contactId;
 
     public TicketEntity() {
-    }
-
-    public TicketEntity(Long contactId) {
-        this.contactId = contactId;
     }
 
     public Long getId() {
@@ -49,7 +48,6 @@ public class TicketEntity {
         return description;
     }
 
-
     public TicketType getTicketType() {
         return ticketType;
     }
@@ -58,7 +56,6 @@ public class TicketEntity {
         return ticketStatus;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -66,7 +63,6 @@ public class TicketEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
@@ -78,10 +74,6 @@ public class TicketEntity {
 
     public Long getContactId() {
         return contactId;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void setContactId(Long contactId) {
@@ -97,12 +89,18 @@ public class TicketEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TicketEntity that = (TicketEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(clientId, that.clientId) && Objects.equals(message, that.message) && Objects.equals(ticketType, that.ticketType) && ticketStatus == that.ticketStatus && Objects.equals(contactId, that.contactId);
+        return Objects.equals(id, that.id)
+                && Objects.equals(title, that.title)
+                && Objects.equals(description, that.description)
+                && Objects.equals(clientId, that.clientId)
+                && Objects.equals(ticketType, that.ticketType)
+                && ticketStatus == that.ticketStatus
+                && Objects.equals(contactId, that.contactId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, clientId, message, ticketType, ticketStatus, contactId);
+        return Objects.hash(id, title, description, clientId, ticketType, ticketStatus, contactId);
     }
 
     @Override
@@ -112,7 +110,6 @@ public class TicketEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", clientId=" + clientId +
-                ", message='" + message + '\'' +
                 ", ticketType='" + ticketType + '\'' +
                 ", ticketStatus=" + ticketStatus +
                 ", contactId=" + contactId +
