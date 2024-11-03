@@ -13,6 +13,9 @@ public class AssuranceEntity {
     private Long id;
     private String title;
     private String message;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private AssuranceStatus status;
 
     @ManyToOne
