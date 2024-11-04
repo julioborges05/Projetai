@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class UserEntity {
+public abstract class UserEntity implements UserInterface{
 
     protected String name;
     protected String email;

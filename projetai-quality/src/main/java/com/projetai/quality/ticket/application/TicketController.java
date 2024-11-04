@@ -2,6 +2,7 @@ package com.projetai.quality.ticket.application;
 
 import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.application.dto.TicketDetailData;
+import com.projetai.quality.ticket.domain.parameters.AnalyzeTicket;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/ticket")
 public class TicketController {
 
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     @Autowired
     public TicketController(TicketService ticketService) {
@@ -36,5 +37,19 @@ public class TicketController {
         ticketService.createTicketParameters(parameters);
         return ResponseEntity.ok("Parameters set successfully");
     }
+
+    @PutMapping("/finish/{id}")
+    public ResponseEntity<String> ticketFinished(@PathVariable Long id){
+        ticketService.setTicketAsFinished(id);
+        return ResponseEntity.ok("Ticket has been finshed");
+    }
+
+    @PutMapping("/analyze")
+    public ResponseEntity analyzeTicket(@RequestBody AnalyzeTicket response){
+        ticketService.analyzeTicket(response);
+
+        return ResponseEntity.ok("Deu tudo certo");
+    }
+
 
 }
