@@ -27,7 +27,7 @@ public class NotificationEntityBuilder<U extends UserEntity & UserInterface> {
         return this;
     }
 
-    public NotificationEntityBuilder<U> withUserId(Long userId){
+    public NotificationEntityBuilder<U> withUserId(Long userId) {
         notification.setUserId(userId);
         return this;
     }
