@@ -36,6 +36,10 @@ public class TicketEntityBuilder {
         ticketEntity.setClientId(clientId);
         return this;
     }
+    public TicketEntityBuilder withDevId(Long devId){
+        ticketEntity.setDevId(devId);
+        return this;
+    }
 
     public TicketEntity build() {
         return ticketEntity;

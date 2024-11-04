@@ -1,5 +1,6 @@
 package com.projetai.quality.ticket.application;
 
+import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
@@ -10,6 +11,7 @@ import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.domain.Ticket;
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketRepository;
+import com.projetai.quality.ticket.domain.parameters.AnalyzeTicket;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,17 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final DeveloperRepository devRepository;
-    private final NotificationRepository<DeveloperEntity> notificationRepository;
+    private final NotificationRepository<DeveloperEntity> devNotificationRepository;
+    private final NotificationRepository<SupportEntity> supportNotificationRepository;
     private final SupportRepository supportRepository;
 
     @Autowired
     public TicketService(TicketRepository ticketRepository, DeveloperRepository devRepository,
-                         NotificationRepository<DeveloperEntity> notificationRepository, SupportRepository supportRepository) {
+                         NotificationRepository<DeveloperEntity> devNotificationRepository, NotificationRepository<SupportEntity> supportNotificationRepository, SupportRepository supportRepository) {
         this.ticketRepository = ticketRepository;
         this.devRepository = devRepository;
-        this.notificationRepository = notificationRepository;
+        this.supportNotificationRepository = supportNotificationRepository;
+        this.devNotificationRepository = devNotificationRepository;
         this.supportRepository = supportRepository;
     }
 
@@ -49,7 +53,7 @@ public class TicketService {
         DeveloperEntity developer = getDevForTicket(parameters);
         Ticket ticket = createTicket(parameters, developer);
 
-        notificationRepository.save(ticket.makeNotificationToDev());
+        devNotificationRepository.save(ticket.makeNotificationToDev());
     }
 
     private DeveloperEntity getDevForTicket(TicketParametersDto parameters) {
@@ -63,10 +67,27 @@ public class TicketService {
     }
 
     public void setTicketAsFinished(long id) {
-        Ticket ticket = new Ticket();
+        var ticketEntity = ticketRepository.getReferenceById(id);
+        var developer = devRepository.getReferenceById(ticketEntity.getDevId());
 
+        Ticket ticket = new Ticket(ticketEntity, developer);
         ticketRepository.save(ticket.ticketFinished(ticketRepository.getReferenceById(id)));
     }
 
+
+    public void analyzeTicket(AnalyzeTicket request) {
+        TicketEntity ticketEntity = ticketRepository.getReferenceById(request.id());
+        SupportEntity support = supportRepository.getReferenceById(request.supportId());
+
+        Ticket ticket =  new Ticket(ticketEntity, support);
+        var analyze = ticket.analizeTicket(ticketEntity, request);
+
+        ticketRepository.save(analyze);
+
+        if(analyze.getTicketStatus() == TicketStatus.FINISHED){
+            supportNotificationRepository.save(ticket.makeNotificationToSupport());
+        }
+
+    }
 
 }

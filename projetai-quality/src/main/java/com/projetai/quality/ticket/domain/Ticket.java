@@ -6,19 +6,25 @@ import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
+import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.support.SupportEntity;
 
+import com.projetai.quality.ticket.domain.parameters.AnalyzeTicket;
+import com.projetai.quality.ticket.domain.parameters.DevAnalyses;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.TicketEntityBuilder;
 
+import java.util.Objects;
+
 public class Ticket implements TicketInterface {
 
-    private TicketType ticketType;
+    private final TicketType ticketType;
     private DeveloperEntity dev;
-    private Long contactId;
-    private String title;
+    private final Long contactId;
+    private final String title;
     private SupportEntity support;
+    private Long clientId;
 
 
     public Ticket(TicketParametersDto parameters, DeveloperEntity dev) {
@@ -28,9 +34,22 @@ public class Ticket implements TicketInterface {
         this.title = parameters.title();
     }
 
+    public Ticket(TicketEntity ticket, DeveloperEntity developer) {
+        this.ticketType = ticket.getTicketType();
+        this.dev = developer;
+        this.contactId = ticket.getContactId();
+        this.title = ticket.getTitle();
+    }
 
+    public Ticket(TicketEntity ticket, SupportEntity support){
+        this.ticketType = ticket.getTicketType();
+        this.contactId = ticket.getContactId();
+        this.title = ticket.getTitle();
+        this.support = support;
+    }
 
-    public Ticket() {
+    public void setClientId(Long clientId){
+        this.clientId = clientId;
     }
 
 
@@ -42,6 +61,7 @@ public class Ticket implements TicketInterface {
                 .withContactId(parameters.contactId())
                 .withClientId(parameters.clientId())
                 .withTicketStatus(parameters.status())
+                .withDevId(parameters.userNotifiedId())
                 .build();
     }
 
@@ -58,8 +78,13 @@ public class Ticket implements TicketInterface {
     }
 
     @Override
-    public boolean analizeTicket() {
-        return false;
+    public TicketEntity analizeTicket(TicketEntity ticket, AnalyzeTicket message) {
+        if(message.analyses() == DevAnalyses.REJECTED){
+            ticket.setTicketStatus(TicketStatus.FINISHED);
+            return ticket;
+        }
+        ticket.setTicketStatus(TicketStatus.IN_PROGRESS);
+        return ticket;
     }
 
     @Override
@@ -77,6 +102,18 @@ public class Ticket implements TicketInterface {
                 .withTitle(title)
                 .withType(ticketType.name())
                 .withUserEntity(new SupportEntity(this.support))
+                .build();
+    }
+
+    @Override
+    public NotificationEntity<UserEntity> makeNotificationToClient() {
+        String message = "This ticket has been finished by the developer";
+
+        return new NotificationEntityBuilder<UserEntity>()
+                .withMessage(message)
+                .withTitle(title)
+                .withType(ticketType.name())
+                .withUserId(this.clientId)
                 .build();
     }
 }

@@ -2,7 +2,6 @@ package com.projetai.core.infra.ticket;
 
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
-import com.projetai.core.infra.user.developer.DeveloperEntity;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -33,6 +32,9 @@ public class TicketEntity {
     @Column(name = "contact_id")
     private Long contactId;
 
+    @Column(name = "dev_id")
+    private Long devId;
+
     public TicketEntity() {
     }
 
@@ -56,6 +58,10 @@ public class TicketEntity {
         return ticketStatus;
     }
 
+    public Long getDevId() {
+        return devId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -66,10 +72,6 @@ public class TicketEntity {
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
-    }
-
-    public Long getClientId() {
-        return clientId;
     }
 
     public void setTicketStatus(TicketStatus ticketStatus) {
@@ -86,6 +88,10 @@ public class TicketEntity {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public void setDevId(Long devId){
+        this.devId = devId;
     }
 
     @Override
