@@ -88,9 +88,7 @@ public class ContactService {
     }
 
     public ContactDto findContact(Long id) {
-        ContactEntity contactEntity = contactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contact not found"));
-
+        ContactEntity contactEntity = safeFindContact(id);
         return new ContactDto(contactEntity);
     }
 
@@ -105,24 +103,29 @@ public class ContactService {
     @Transactional
     public void replyProblem(ContactAnalysisDto contactAnalysis) {
         if (contactAnalysis.isReplied()) {
-            ContactEntity contactEntity = contactRepository.findById(contactAnalysis.contactId())
-                    .orElseThrow(() -> new RuntimeException("Contact not found"));
-
-            Contact contact = new Contact(contactEntity);
-            contactRepository.save(contact.replyProblem());
-
-            ContactAnalysis analysis = new ContactAnalysis(contactAnalysis);
-            contactAnalysisRepository.save(new ContactAnalysisEntity(analysis));
-
-            return;
+            createTicketAnalysis(contactAnalysis);
         }
 
         closeContact(contactAnalysis.contactId());
     }
 
-    public void closeContact(Long contactId) {
-        ContactEntity contactEntity = contactRepository.findById(contactId)
+    private void createTicketAnalysis(ContactAnalysisDto contactAnalysis) {
+        ContactEntity contactEntity = safeFindContact(contactAnalysis.contactId());
+
+        Contact contact = new Contact(contactEntity);
+        contactRepository.save(contact.replyProblem());
+
+        ContactAnalysis analysis = new ContactAnalysis(contactAnalysis);
+        contactAnalysisRepository.save(new ContactAnalysisEntity(analysis));
+    }
+
+    private ContactEntity safeFindContact(Long id) {
+        return contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contact not found"));
+    }
+
+    private void closeContact(Long contactId) {
+        ContactEntity contactEntity = safeFindContact(contactId);
 
         Contact contact = new Contact(contactEntity);
         contactRepository.save(contact.closeContact());
