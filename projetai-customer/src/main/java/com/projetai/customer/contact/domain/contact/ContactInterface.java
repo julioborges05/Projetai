@@ -12,9 +12,9 @@ public interface ContactInterface {
 
     NotificationEntity<SupportEntity> makeNotificationToSupport();
 
-    void replyProblem();
+    ContactEntity replyProblem();
 
-    void closeContact();
+    ContactEntity closeContact();
 
     NotificationEntity<ClientEntity> makeNotificationToClient();
 

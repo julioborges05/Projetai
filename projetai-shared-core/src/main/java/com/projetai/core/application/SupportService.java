@@ -32,6 +32,7 @@ public class SupportService {
     public SupportDto createSupport(SupportDto supportDto) {
         SupportEntity support = new SupportEntity(supportDto);
         support.setId(null);
+        support.setIsAvailable(true);
 
         return Support.dbEntityToDto(supportRepository.save(support));
     }

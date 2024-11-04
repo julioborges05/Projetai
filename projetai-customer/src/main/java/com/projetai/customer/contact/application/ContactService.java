@@ -1,16 +1,19 @@
 package com.projetai.customer.contact.application;
 
-import com.projetai.core.application.dto.SupportDto;
 import com.projetai.core.domain.user.support.Support;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.core.infra.user.support.SupportRepository;
 import com.projetai.customer.contact.application.dto.ClientDto;
+import com.projetai.customer.contact.application.dto.ContactAnalysisDto;
 import com.projetai.customer.contact.application.dto.ContactDto;
 import com.projetai.customer.contact.domain.client.Client;
 import com.projetai.customer.contact.domain.contact.Contact;
+import com.projetai.customer.contact.domain.contact.analysis.ContactAnalysis;
 import com.projetai.customer.contact.infra.contact.ContactEntity;
 import com.projetai.customer.contact.infra.contact.ContactRepository;
+import com.projetai.customer.contact.infra.contact.analysis.ContactAnalysisEntity;
+import com.projetai.customer.contact.infra.contact.analysis.ContactAnalysisRepository;
 import com.projetai.customer.contact.infra.user.client.ClientEntity;
 import com.projetai.customer.contact.infra.user.client.ClientRepository;
 import jakarta.transaction.Transactional;
@@ -26,15 +29,21 @@ public class ContactService {
     private final ContactRepository contactRepository;
     private final SupportRepository supportRepository;
     private final ClientRepository clientRepository;
-    private final NotificationRepository<SupportEntity> notificationRepository;
+    private final ContactAnalysisRepository contactAnalysisRepository;
+    private final NotificationRepository<SupportEntity> supportNotificationRepository;
+    private final NotificationRepository<ClientEntity> clientNotificationRepository;
 
     @Autowired
     public ContactService(ContactRepository contactRepository, SupportRepository supportRepository,
-                          ClientRepository clientRepository, NotificationRepository<SupportEntity> notificationRepository) {
+                          ClientRepository clientRepository, ContactAnalysisRepository contactAnalysisRepository,
+                          NotificationRepository<SupportEntity> notificationRepository,
+                          NotificationRepository<ClientEntity> clientNotificationRepository) {
         this.contactRepository = contactRepository;
         this.supportRepository = supportRepository;
         this.clientRepository = clientRepository;
-        this.notificationRepository = notificationRepository;
+        this.contactAnalysisRepository = contactAnalysisRepository;
+        this.supportNotificationRepository = notificationRepository;
+        this.clientNotificationRepository = clientNotificationRepository;
     }
 
     @Transactional
@@ -44,7 +53,7 @@ public class ContactService {
         Contact contact = new Contact(contactDto, client, support);
 
         contactRepository.save(contact.makeContact());
-        notificationRepository.save(contact.makeNotificationToSupport());
+        supportNotificationRepository.save(contact.makeNotificationToSupport());
     }
 
     private Support getSupportForContact() {
@@ -91,5 +100,32 @@ public class ContactService {
         return contacts.stream()
                 .map(ContactDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void replyProblem(ContactAnalysisDto contactAnalysis) {
+        if (contactAnalysis.isReplied()) {
+            ContactEntity contactEntity = contactRepository.findById(contactAnalysis.contactId())
+                    .orElseThrow(() -> new RuntimeException("Contact not found"));
+
+            Contact contact = new Contact(contactEntity);
+            contactRepository.save(contact.replyProblem());
+
+            ContactAnalysis analysis = new ContactAnalysis(contactAnalysis);
+            contactAnalysisRepository.save(new ContactAnalysisEntity(analysis));
+
+            return;
+        }
+
+        closeContact(contactAnalysis.contactId());
+    }
+
+    public void closeContact(Long contactId) {
+        ContactEntity contactEntity = contactRepository.findById(contactId)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+
+        Contact contact = new Contact(contactEntity);
+        contactRepository.save(contact.closeContact());
+        clientNotificationRepository.save(contact.makeNotificationToClient());
     }
 }

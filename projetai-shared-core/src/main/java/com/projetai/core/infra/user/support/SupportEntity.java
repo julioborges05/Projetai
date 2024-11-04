@@ -47,6 +47,14 @@ public class SupportEntity extends UserEntity implements UserInterface {
         return this.isAvailable;
     }
 
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+    public Support toSupport() {
+        return new Support(id, name, email, isAvailable);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

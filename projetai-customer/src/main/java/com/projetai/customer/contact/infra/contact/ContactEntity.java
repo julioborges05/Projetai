@@ -22,8 +22,16 @@ public class ContactEntity {
     @ManyToOne
     @JoinColumn(name = "support_id")
     private SupportEntity supportEntity;
+    @Column(name = "closed")
+    private boolean isClosed;
+    @Column(name = "is_replied")
+    private boolean isReplied;
 
     public ContactEntity() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
@@ -44,6 +52,14 @@ public class ContactEntity {
 
     public void setSupportEntity(SupportEntity supportEntity) {
         this.supportEntity = supportEntity;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
+    }
+
+    public void setReplied(boolean replied) {
+        isReplied = replied;
     }
 
     public Long getId() {
@@ -68,6 +84,14 @@ public class ContactEntity {
 
     public SupportEntity getSupportEntity() {
         return supportEntity;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public boolean isReplied() {
+        return isReplied;
     }
 
     @Override

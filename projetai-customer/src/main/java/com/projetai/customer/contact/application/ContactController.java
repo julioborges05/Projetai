@@ -1,7 +1,6 @@
 package com.projetai.customer.contact.application;
 
-import com.projetai.core.application.dto.SupportDto;
-import com.projetai.customer.contact.application.dto.ClientDto;
+import com.projetai.customer.contact.application.dto.ContactAnalysisDto;
 import com.projetai.customer.contact.application.dto.ContactDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +23,12 @@ public class ContactController {
     public ResponseEntity<String> contact(@RequestBody ContactDto contactDto) {
         contactService.makeContact(contactDto);
         return ResponseEntity.ok("Contact made successfully");
+    }
+
+    @PostMapping("replyProblem")
+    public ResponseEntity<String> replyProblem(@RequestBody ContactAnalysisDto contactAnalysis) {
+        contactService.replyProblem(contactAnalysis);
+        return ResponseEntity.ok("Problem replied successfully");
     }
 
     @GetMapping("/findContact")
