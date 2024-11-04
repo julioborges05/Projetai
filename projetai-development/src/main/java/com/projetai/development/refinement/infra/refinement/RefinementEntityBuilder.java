@@ -1,10 +1,17 @@
 package com.projetai.development.refinement.infra.refinement;
 
+import com.projetai.core.infra.ticket.TicketEntity;
+
 import java.time.LocalDateTime;
 
 public class RefinementEntityBuilder {
 
     private final RefinementEntity refinementEntity = new RefinementEntity();
+
+    public RefinementEntityBuilder withId(Long id) {
+        refinementEntity.setId(id);
+        return this;
+    }
 
     public RefinementEntityBuilder withApproval(boolean isApproved) {
         refinementEntity.setApproved(isApproved);
@@ -16,13 +23,13 @@ public class RefinementEntityBuilder {
         return this;
     }
 
-    public RefinementEntityBuilder withTechLeadUsername(String techLeadUsername) {
-        refinementEntity.setTechLeadUsername(techLeadUsername);
+    public RefinementEntityBuilder withTechLeadId(Long techLeadId) {
+        refinementEntity.setTechLeadId(techLeadId);
         return this;
     }
 
-    public RefinementEntityBuilder withDeveloperUsername(String developerUsername) {
-        refinementEntity.setDeveloperUsername(developerUsername);
+    public RefinementEntityBuilder withDeveloperId(Long developerId) {
+        refinementEntity.setDeveloperId(developerId);
         return this;
     }
 
@@ -33,6 +40,11 @@ public class RefinementEntityBuilder {
 
     public RefinementEntityBuilder withFinishedTimeAt(LocalDateTime finishedTime) {
         refinementEntity.setFinishedTime(finishedTime);
+        return this;
+    }
+
+    public RefinementEntityBuilder withTicket(TicketEntity ticketEntity) {
+        refinementEntity.setTicketEntity(ticketEntity);
         return this;
     }
 
