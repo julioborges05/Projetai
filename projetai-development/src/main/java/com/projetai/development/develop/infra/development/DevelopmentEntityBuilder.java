@@ -10,6 +10,11 @@ public class DevelopmentEntityBuilder {
 
     private final DevelopmentEntity developmentEntity = new DevelopmentEntity();
 
+    public DevelopmentEntityBuilder withId(Long id) {
+        developmentEntity.setId(id);
+        return this;
+    }
+
     public DevelopmentEntityBuilder withType(DevelopmentType developmentType) {
         developmentEntity.setType(developmentType);
         return this;
@@ -37,6 +42,11 @@ public class DevelopmentEntityBuilder {
 
     public DevelopmentEntityBuilder withTicket(TicketEntity ticketEntity) {
         developmentEntity.setTicketEntity(ticketEntity);
+        return this;
+    }
+
+    public DevelopmentEntityBuilder withEstimatedHours(Integer estimatedHours) {
+        developmentEntity.setEstimatedHours(estimatedHours);
         return this;
     }
 

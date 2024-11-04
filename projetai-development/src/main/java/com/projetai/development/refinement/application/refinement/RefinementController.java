@@ -32,7 +32,7 @@ public class RefinementController {
     @PostMapping("/completeRefinement")
     public ResponseEntity<String> completeRefinement(@RequestBody RefinementDto refinementDto) {
         refinementService.completeRefinement(refinementDto);
-        return ResponseEntity.ok("Refinement started");
+        return ResponseEntity.ok("Refinement is over");
     }
 
 }

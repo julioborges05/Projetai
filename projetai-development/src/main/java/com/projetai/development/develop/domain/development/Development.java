@@ -28,16 +28,24 @@ public class Development implements DevelopmentInterface {
 
     private Long techLeadId;
 
-    public Development(Long developerId,
+    private Integer estimatedHours;
+
+    private Long previousDevelopmentId;
+
+    public Development(Long id,
+                       Long developerId,
                        DevelopmentType type,
                        DevelopmentStatus status,
                        LocalDateTime startedTime,
-                       TicketEntity ticketEntity) {
+                       TicketEntity ticketEntity,
+                       Integer estimatedHours) {
+        this.id = id;
         this.type = type;
         this.status = status;
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
         this.startedTime = startedTime;
+        this.estimatedHours = estimatedHours;
     }
 
     public Development(Long developerId,
@@ -61,7 +69,8 @@ public class Development implements DevelopmentInterface {
                        TicketEntity ticketEntity,
                        LocalDateTime startedTime,
                        LocalDateTime finishedTime,
-                       Long techLeadId) {
+                       Long techLeadId,
+                       Integer estimatedHours) {
         this.id = id;
         this.type = type;
         this.status = status;
@@ -70,10 +79,32 @@ public class Development implements DevelopmentInterface {
         this.startedTime = startedTime;
         this.finishedTime = finishedTime;
         this.techLeadId = techLeadId;
+        this.estimatedHours = estimatedHours;
+    }
+
+    public Development(Long developerId,
+                       TicketEntity ticketEntity,
+                       Integer estimatedHours) {
+        this.developerId = developerId;
+        this.ticketEntity = ticketEntity;
+        this.estimatedHours = estimatedHours;
     }
 
     @Override
     public DevelopmentEntity startDevelopment() {
+        return new DevelopmentEntityBuilder()
+                .withId(id)
+                .withDeveloperId(developerId)
+                .withType(type)
+                .withStatus(status)
+                .withTicket(ticketEntity)
+                .withStartedTimeAt(startedTime)
+                .withEstimatedHours(estimatedHours)
+                .build();
+    }
+
+    @Override
+    public DevelopmentEntity makeAdjustments() {
         return new DevelopmentEntityBuilder()
                 .withDeveloperId(developerId)
                 .withType(type)
@@ -86,12 +117,23 @@ public class Development implements DevelopmentInterface {
     @Override
     public DevelopmentEntity completeDevelopment() {
         return new DevelopmentEntityBuilder()
+                .withId(id)
                 .withDeveloperId(developerId)
                 .withType(type)
                 .withStatus(status)
                 .withTicket(ticketEntity)
                 .withStartedTimeAt(startedTime)
                 .withFinishedTimeAt(finishedTime)
+                .withEstimatedHours(estimatedHours)
+                .build();
+    }
+
+    @Override
+    public DevelopmentEntity addEstimatedHours() {
+        return new DevelopmentEntityBuilder()
+                .withDeveloperId(developerId)
+                .withTicket(ticketEntity)
+                .withEstimatedHours(estimatedHours)
                 .build();
     }
 
@@ -114,6 +156,18 @@ public class Development implements DevelopmentInterface {
         return new NotificationEntityBuilder<TechLeadEntity>()
                 .withMessage(message)
                 .withTitle("Task completed")
+                .withUserId(techLeadId)
+                .withType(type.name())
+                .build();
+    }
+
+    @Override
+    public NotificationEntity<TechLeadEntity> makeNotificationToClient() {
+        String message = "Required hours of development on this task: " + estimatedHours;
+
+        return new NotificationEntityBuilder<TechLeadEntity>()
+                .withMessage(message)
+                .withTitle("Hours estimated")
                 .withUserId(techLeadId)
                 .build();
     }

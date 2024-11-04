@@ -8,6 +8,11 @@ public class RefinementEntityBuilder {
 
     private final RefinementEntity refinementEntity = new RefinementEntity();
 
+    public RefinementEntityBuilder withId(Long id) {
+        refinementEntity.setId(id);
+        return this;
+    }
+
     public RefinementEntityBuilder withApproval(boolean isApproved) {
         refinementEntity.setApproved(isApproved);
         return this;

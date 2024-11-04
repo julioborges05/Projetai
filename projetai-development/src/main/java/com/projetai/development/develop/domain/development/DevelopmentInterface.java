@@ -9,9 +9,15 @@ public interface DevelopmentInterface {
 
     DevelopmentEntity startDevelopment();
 
+    DevelopmentEntity makeAdjustments();
+
     DevelopmentEntity completeDevelopment();
+
+    DevelopmentEntity addEstimatedHours();
 
     NotificationEntity<DeveloperEntity> makeNotificationToDev(String necessaryAdjustments, DeveloperEntity developer);
 
     NotificationEntity<TechLeadEntity> makeNotificationToTechLead();
+
+    NotificationEntity<TechLeadEntity> makeNotificationToClient();
 }

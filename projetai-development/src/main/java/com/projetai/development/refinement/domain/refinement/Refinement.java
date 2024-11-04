@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 
 public class Refinement implements RefinementInterface {
 
+    private Long id;
+
     private boolean isApproved;
 
     private String necessaryAdjustments;
@@ -37,9 +39,10 @@ public class Refinement implements RefinementInterface {
         this.supportId = supportId;
     }
 
-    public Refinement(boolean isApproved, String necessaryAdjustments, Long techLeadId,
+    public Refinement(Long id, boolean isApproved, String necessaryAdjustments, Long techLeadId,
                       Long developerId, LocalDateTime startedTime, LocalDateTime finishedTime,
                       TicketEntity ticketEntity, Long supportId) {
+        this.id = id;
         this.isApproved = isApproved;
         this.necessaryAdjustments = necessaryAdjustments;
         this.techLeadId = techLeadId;
@@ -56,12 +59,14 @@ public class Refinement implements RefinementInterface {
                 .withTechLeadId(techLeadId)
                 .withDeveloperId(developerId)
                 .withStartedTimeAt(startedTime)
+                .withTicket(ticketEntity)
                 .build();
     }
 
     @Override
     public RefinementEntity completeRefinement() {
         return new RefinementEntityBuilder()
+                .withId(id)
                 .withApproval(isApproved)
                 .withNecessaryAdjustments(necessaryAdjustments)
                 .withTechLeadId(techLeadId)
@@ -80,6 +85,7 @@ public class Refinement implements RefinementInterface {
                 .withMessage(message)
                 .withTitle("Ticket Approved!")
                 .withUserId(supportId)
+                .withType(ticketEntity.getTicketType().name())
                 .build();
     }
 }

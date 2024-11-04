@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "development")
 public class DevelopmentEntity {
 
     @Id
@@ -19,20 +19,27 @@ public class DevelopmentEntity {
     private DevelopmentType type;
     private DevelopmentStatus status;
 
+    @Column(name = "developer_id")
     private Long developerId;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     private TicketEntity ticketEntity;
 
+    @Column(name = "started_time")
     private LocalDateTime startedTime;
 
+    @Column(name = "finished_time")
     private LocalDateTime finishedTime;
+
+    @Column(name = "estimated_hours")
+    private Integer estimatedHours;
 
     public DevelopmentEntity() {}
 
     public DevelopmentEntity(Long id, DevelopmentType type, DevelopmentStatus status, Long developerId,
-                             TicketEntity ticketEntity, LocalDateTime startedTime, LocalDateTime finishedTime) {
+                             TicketEntity ticketEntity, LocalDateTime startedTime, LocalDateTime finishedTime,
+                             Integer estimatedHours) {
         this.id = id;
         this.type = type;
         this.status = status;
@@ -40,6 +47,7 @@ public class DevelopmentEntity {
         this.ticketEntity = ticketEntity;
         this.startedTime = startedTime;
         this.finishedTime = finishedTime;
+        this.estimatedHours = estimatedHours;
     }
 
     public Long getId() {
@@ -98,4 +106,11 @@ public class DevelopmentEntity {
         this.finishedTime = finishedTime;
     }
 
+    public Integer getEstimatedHours() {
+        return estimatedHours;
+    }
+
+    public void setEstimatedHours(Integer estimatedHours) {
+        this.estimatedHours = estimatedHours;
+    }
 }

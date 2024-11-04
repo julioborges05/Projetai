@@ -1,11 +1,14 @@
 package com.projetai.development.develop.application;
 
+import com.projetai.core.infra.comment.CommentRepository;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.core.infra.ticket.TicketRepository;
+import com.projetai.development.develop.application.dto.CommentDto;
 import com.projetai.development.develop.application.dto.DeveloperDto;
-import com.projetai.core.infra.user.support.SupportEntity;
 import com.projetai.development.develop.application.dto.DevelopmentDto;
+import com.projetai.development.develop.application.dto.EstimatedHoursDto;
+import com.projetai.development.develop.domain.comment.Comment;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
 import com.projetai.development.develop.domain.development.type.DevelopmentType;
@@ -35,16 +38,19 @@ public class DevelopmentService {
 
     private final TicketRepository ticketRepository;
 
+    private final CommentRepository commentRepository;
+
     @Autowired
     public DevelopmentService(DevelopmentRepository developmentRepository, DeveloperRepository developerRepository,
                               NotificationRepository<DeveloperEntity> notificationDeveloperRepository,
                               NotificationRepository<TechLeadEntity> notificationTechLeadRepository,
-                              TicketRepository ticketRepository) {
+                              TicketRepository ticketRepository, CommentRepository commentRepository) {
         this.developmentRepository = developmentRepository;
         this.developerRepository = developerRepository;
         this.notificationDeveloperRepository = notificationDeveloperRepository;
         this.notificationTechLeadRepository = notificationTechLeadRepository;
         this.ticketRepository = ticketRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Transactional
@@ -55,20 +61,56 @@ public class DevelopmentService {
         return Developer.dbEntityToDto(developerRepository.save(developer));
     }
 
-    public void startDevelopment(DevelopmentDto developmentDto) {
-        Optional<TicketEntity> ticketOp = ticketRepository.findById(developmentDto.ticketId());
+    @Transactional
+    public void addEstimatedHours(EstimatedHoursDto estimatedHoursDto) {
+        Optional<TicketEntity> ticketOp = ticketRepository.findById(estimatedHoursDto.ticketId());
 
         if (ticketOp.isEmpty()) {
             throw new RuntimeException("Ticket not found");
         }
 
-        Development development = new Development(developmentDto.developerId(), developmentDto.developmentType(),
-                DevelopmentStatus.IN_PROGRESS, LocalDateTime.now(), ticketOp.get());
+        Development development = new Development(estimatedHoursDto.developerId(), ticketOp.get(),
+                estimatedHoursDto.estimatedHours());
 
-        developmentRepository.save(development.startDevelopment());
-        //notificationRepository.save(development.makeNotification());
+        developmentRepository.save(development.addEstimatedHours());
+
     }
 
+    @Transactional
+    public void startDevelopment(DevelopmentDto developmentDto) {
+        Optional<TicketEntity> ticketOp = ticketRepository.findById(developmentDto.ticketId());
+        Optional<DevelopmentEntity> developmentEntityOP = developmentRepository.findById(developmentDto.id());
+
+        if (ticketOp.isEmpty()) {
+            throw new RuntimeException("Ticket not found");
+        }
+
+        if (developmentEntityOP.isEmpty()) {
+            throw new RuntimeException("Development not found");
+        }
+
+        Development development = new Development(developmentEntityOP.get().getId(),
+                developmentEntityOP.get().getDeveloperId(), developmentDto.developmentType(),
+                DevelopmentStatus.IN_PROGRESS, LocalDateTime.now(), ticketOp.get(), developmentEntityOP.get().getEstimatedHours());
+
+        developmentRepository.save(development.startDevelopment());
+    }
+
+    @Transactional
+    public void addDetailsToTicket(CommentDto commentDto) {
+        Optional<TicketEntity> ticketOp = ticketRepository.findById(commentDto.ticketId());
+
+        if (ticketOp.isEmpty()) {
+            throw new RuntimeException("Ticket not found");
+        }
+
+        Comment comment = new Comment(commentDto.message(), ticketOp.get(), commentDto.userId());
+
+        commentRepository.save(comment.addComment());
+
+    }
+
+    @Transactional
     public void completeDevelopment(DevelopmentDto developmentDto) {
         Optional<DevelopmentEntity> developmentEntityOP = developmentRepository.findById(developmentDto.id());
         Optional<TicketEntity> ticketOp = ticketRepository.findById(developmentDto.ticketId());
@@ -81,16 +123,18 @@ public class DevelopmentService {
             throw new RuntimeException("Ticket not found");
         }
 
-        Development development = new Development(developmentDto.id(), developmentDto.developmentType(),
+        Development development = new Development(developmentEntityOP.get().getId(), developmentEntityOP.get().getType(),
                 DevelopmentStatus.FINISHED, developmentDto.developerId(), ticketOp.get(),
-                developmentEntityOP.get().getStartedTime(), LocalDateTime.now(), developmentDto.techLeadId());
+                developmentEntityOP.get().getStartedTime(), developmentDto.finishedTime(), developmentDto.techLeadId(),
+                developmentEntityOP.get().getEstimatedHours());
 
         developmentRepository.save(development.completeDevelopment());
 
         notificationTechLeadRepository.save(development.makeNotificationToTechLead());
     }
 
-    public void updateDevelopment(AdjustmentsDto adjustmentsDto) {
+    @Transactional
+    public void makeAdjustments(AdjustmentsDto adjustmentsDto) {
        Optional<DeveloperEntity> developerOp = developerRepository.findById(adjustmentsDto.developerId());
         Optional<TicketEntity> ticketOp = ticketRepository.findById(adjustmentsDto.ticketId());
 
@@ -107,7 +151,7 @@ public class DevelopmentService {
 
         notificationDeveloperRepository.save(development.makeNotificationToDev(adjustmentsDto.necessaryAdjustments(), developerOp.get()));
 
-        developmentRepository.save(development.startDevelopment());
+        developmentRepository.save(development.makeAdjustments());
 
     }
 }

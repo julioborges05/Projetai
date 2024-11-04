@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "techLead")
+@Entity(name = "tech_lead")
 public class TechLeadEntity extends UserEntity implements UserInterface {
 
     @Id

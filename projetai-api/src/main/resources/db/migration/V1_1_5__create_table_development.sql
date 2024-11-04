@@ -2,10 +2,11 @@ create table if not exists development (
     id serial primary key,
     type varchar(255),
     status varchar(255),
-    developerId bigint not null,
-    startedTime date,
-    finishedTime date,
+    developer_id bigint not null,
+    started_time date,
+    finished_time date,
     ticket_id bigint not null,
-
-    constraint development_ticket_fkey foreign key (ticket_id) references ticket(id),
+    estimated_hours integer,
+    constraint development_ticket_fk foreign key (ticket_id) references ticket(id),
+    constraint development_developer_fk foreign key (developer_id) references developer(id)
 );

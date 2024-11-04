@@ -14,16 +14,22 @@ public class RefinementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "is_approved")
     private boolean isApproved;
 
+    @Column(name = "necessary_adjustments")
     private String necessaryAdjustments;
 
+    @Column(name = "tech_lead_id")
     private Long techLeadId;
 
+    @Column(name = "developer_id")
     private Long developerId;
 
+    @Column(name = "started_time")
     private LocalDateTime startedTime;
 
+    @Column(name = "finished_time")
     private LocalDateTime finishedTime;
 
     @ManyToOne
