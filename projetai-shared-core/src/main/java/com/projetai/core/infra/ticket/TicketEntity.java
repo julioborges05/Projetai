@@ -62,6 +62,10 @@ public class TicketEntity {
         return devId;
     }
 
+    public Long getClientId(){
+        return clientId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

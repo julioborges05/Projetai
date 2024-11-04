@@ -15,7 +15,6 @@ import com.projetai.quality.ticket.domain.parameters.DevAnalyses;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 import com.projetai.quality.ticket.infra.TicketEntityBuilder;
 
-import java.util.Objects;
 
 public class Ticket implements TicketInterface {
 
@@ -66,10 +65,10 @@ public class Ticket implements TicketInterface {
     }
 
     @Override
-    public NotificationEntity<DeveloperEntity> makeNotificationToDev() {
+    public NotificationEntity<UserEntity> makeNotificationToDev() {
         String message = "You have a new ticket";
 
-        return new NotificationEntityBuilder<DeveloperEntity>()
+        return new NotificationEntityBuilder<UserEntity>()
                 .withMessage(message)
                 .withTitle(title)
                 .withType(this.ticketType.name())
@@ -94,10 +93,10 @@ public class Ticket implements TicketInterface {
     }
 
     @Override
-    public NotificationEntity<SupportEntity> makeNotificationToSupport() {
+    public NotificationEntity<UserEntity> makeNotificationToSupport() {
         String message = "This ticket has been finished by the developer";
 
-        return new NotificationEntityBuilder<SupportEntity>()
+        return new NotificationEntityBuilder<UserEntity>()
                 .withMessage(message)
                 .withTitle(title)
                 .withType(ticketType.name())
@@ -107,7 +106,7 @@ public class Ticket implements TicketInterface {
 
     @Override
     public NotificationEntity<UserEntity> makeNotificationToClient() {
-        String message = "This ticket has been finished by the developer";
+        String message = "Your contact has been finished";
 
         return new NotificationEntityBuilder<UserEntity>()
                 .withMessage(message)

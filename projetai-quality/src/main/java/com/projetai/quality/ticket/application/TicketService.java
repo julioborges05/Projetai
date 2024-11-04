@@ -1,8 +1,8 @@
 package com.projetai.quality.ticket.application;
 
-import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
+import com.projetai.core.infra.user.UserEntity;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.developer.DeveloperRepository;
 import com.projetai.core.infra.user.support.SupportEntity;
@@ -24,17 +24,16 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final DeveloperRepository devRepository;
-    private final NotificationRepository<DeveloperEntity> devNotificationRepository;
-    private final NotificationRepository<SupportEntity> supportNotificationRepository;
+    private final NotificationRepository<UserEntity> userNotificationRepository;
+
     private final SupportRepository supportRepository;
 
     @Autowired
     public TicketService(TicketRepository ticketRepository, DeveloperRepository devRepository,
-                         NotificationRepository<DeveloperEntity> devNotificationRepository, NotificationRepository<SupportEntity> supportNotificationRepository, SupportRepository supportRepository) {
+                         NotificationRepository<UserEntity> userNotificationRepository, SupportRepository supportRepository) {
         this.ticketRepository = ticketRepository;
         this.devRepository = devRepository;
-        this.supportNotificationRepository = supportNotificationRepository;
-        this.devNotificationRepository = devNotificationRepository;
+        this.userNotificationRepository = userNotificationRepository;
         this.supportRepository = supportRepository;
     }
 
@@ -53,7 +52,7 @@ public class TicketService {
         DeveloperEntity developer = getDevForTicket(parameters);
         Ticket ticket = createTicket(parameters, developer);
 
-        devNotificationRepository.save(ticket.makeNotificationToDev());
+        userNotificationRepository.save(ticket.makeNotificationToDev());
     }
 
     private DeveloperEntity getDevForTicket(TicketParametersDto parameters) {
@@ -85,7 +84,10 @@ public class TicketService {
         ticketRepository.save(analyze);
 
         if(analyze.getTicketStatus() == TicketStatus.FINISHED){
-            supportNotificationRepository.save(ticket.makeNotificationToSupport());
+            ticket.setClientId(ticketEntity.getClientId());
+
+            userNotificationRepository.save(ticket.makeNotificationToSupport());
+            userNotificationRepository.save(ticket.makeNotificationToClient());
         }
 
     }
