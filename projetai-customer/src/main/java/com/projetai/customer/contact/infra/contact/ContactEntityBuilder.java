@@ -8,6 +8,11 @@ public class ContactEntityBuilder {
 
     private final ContactEntity contactEntity = new ContactEntity();
 
+    public ContactEntityBuilder withId(Long id) {
+        contactEntity.setId(id);
+        return this;
+    }
+
     public ContactEntityBuilder withTitle(String title) {
         contactEntity.setTitle(title);
         return this;
@@ -30,6 +35,16 @@ public class ContactEntityBuilder {
 
     public ContactEntityBuilder withSupportEntity(SupportEntity supportEntity) {
         contactEntity.setSupportEntity(supportEntity);
+        return this;
+    }
+
+    public ContactEntityBuilder withClosed(boolean isClosed) {
+        contactEntity.setClosed(isClosed);
+        return this;
+    }
+
+    public ContactEntityBuilder withReplied(boolean isReplied) {
+        contactEntity.setReplied(isReplied);
         return this;
     }
 

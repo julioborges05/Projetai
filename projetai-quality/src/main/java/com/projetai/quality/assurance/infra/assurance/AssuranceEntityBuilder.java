@@ -7,28 +7,28 @@ import com.projetai.core.infra.user.support.SupportEntity;
 public class AssuranceEntityBuilder {
     private final AssuranceEntity assuranceEntity = new AssuranceEntity();
 
+    public AssuranceEntityBuilder withTitle(String title) {
+        assuranceEntity.setTitle(title);
+        return this;
+    }
+
+    public AssuranceEntityBuilder withMessage(String message) {
+        assuranceEntity.setMessage(message);
+        return this;
+    }
+
     public AssuranceEntityBuilder withProgress(AssuranceStatus status) {
         assuranceEntity.setStatus(status);
         return this;
     }
 
-    public AssuranceEntityBuilder withApproval(AssuranceStatus status) {
-        assuranceEntity.setStatus(status);
+    public AssuranceEntityBuilder withDeveloperEntity(DeveloperEntity developer) {
+        assuranceEntity.setDeveloperEntity(developer);
         return this;
     }
 
-    public AssuranceEntityBuilder withNecessaryAdjustments(AssuranceStatus status) {
-        assuranceEntity.setStatus(status);
-        return this;
-    }
-
-    public AssuranceEntityBuilder withDeveloperEntity(DeveloperEntity developerEntity) {
-        assuranceEntity.setDeveloperEntity(developerEntity);
-        return this;
-    }
-
-    public AssuranceEntityBuilder withSupportEntity(SupportEntity supportEntity) {
-        assuranceEntity.setSupportEntity(supportEntity);
+    public AssuranceEntityBuilder withSupportEntity(SupportEntity support) {
+        assuranceEntity.setSupportEntity(support);
         return this;
     }
 
