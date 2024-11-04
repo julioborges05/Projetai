@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/ticket")
 public class TicketController {
 
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     @Autowired
     public TicketController(TicketService ticketService) {
@@ -35,6 +35,12 @@ public class TicketController {
     public ResponseEntity<String> createTicketParameters(@RequestBody TicketParametersDto parameters) {
         ticketService.createTicketParameters(parameters);
         return ResponseEntity.ok("Parameters set successfully");
+    }
+
+    @PutMapping("/finish/{id}")
+    public ResponseEntity<String> ticketFinished(@PathVariable Long id){
+        ticketService.setTicketAsFinished(id);
+        return ResponseEntity.ok("Ticket has been finshed");
     }
 
 }

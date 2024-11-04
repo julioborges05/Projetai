@@ -1,10 +1,11 @@
 package com.projetai.quality.ticket.application;
 
-import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.developer.DeveloperRepository;
+import com.projetai.core.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.support.SupportRepository;
 import com.projetai.quality.ticket.application.dto.GetAllTicketsData;
 import com.projetai.quality.ticket.domain.Ticket;
 import com.projetai.core.infra.ticket.TicketEntity;
@@ -22,13 +23,15 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final DeveloperRepository devRepository;
     private final NotificationRepository<DeveloperEntity> notificationRepository;
+    private final SupportRepository supportRepository;
 
     @Autowired
     public TicketService(TicketRepository ticketRepository, DeveloperRepository devRepository,
-                         NotificationRepository<DeveloperEntity> notificationRepository) {
+                         NotificationRepository<DeveloperEntity> notificationRepository, SupportRepository supportRepository) {
         this.ticketRepository = ticketRepository;
         this.devRepository = devRepository;
         this.notificationRepository = notificationRepository;
+        this.supportRepository = supportRepository;
     }
 
     //Return details of a Ticket searching by its id
@@ -58,4 +61,12 @@ public class TicketService {
         ticketRepository.save(ticket.defineTicketParameters(parameters));
         return ticket;
     }
+
+    public void setTicketAsFinished(long id) {
+        Ticket ticket = new Ticket();
+
+        ticketRepository.save(ticket.ticketFinished(ticketRepository.getReferenceById(id)));
+    }
+
+
 }

@@ -15,8 +15,8 @@ public interface TicketInterface {
 
     boolean analizeTicket();
 
-    NotificationEntity<SupportEntity> sendNotificationToSupport();
+    TicketEntity ticketFinished(TicketEntity ticket);
 
-    void ticketFinished();
+    NotificationEntity<SupportEntity> makeNotificationToSupport();
 
 }

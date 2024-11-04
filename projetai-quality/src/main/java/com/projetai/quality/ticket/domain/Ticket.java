@@ -4,6 +4,7 @@ package com.projetai.quality.ticket.domain;
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.ticket.TicketEnum.TicketType;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
 import com.projetai.core.infra.user.support.SupportEntity;
@@ -13,10 +14,12 @@ import com.projetai.quality.ticket.infra.TicketEntityBuilder;
 
 public class Ticket implements TicketInterface {
 
-    private final TicketType ticketType;
-    private final DeveloperEntity dev;
-    private final Long contactId;
-    private final String title;
+    private TicketType ticketType;
+    private DeveloperEntity dev;
+    private Long contactId;
+    private String title;
+    private SupportEntity support;
+
 
     public Ticket(TicketParametersDto parameters, DeveloperEntity dev) {
         this.ticketType = parameters.type();
@@ -24,6 +27,12 @@ public class Ticket implements TicketInterface {
         this.contactId = parameters.contactId();
         this.title = parameters.title();
     }
+
+
+
+    public Ticket() {
+    }
+
 
     @Override
     public TicketEntity defineTicketParameters(TicketParametersDto parameters) {
@@ -54,12 +63,20 @@ public class Ticket implements TicketInterface {
     }
 
     @Override
-    public void ticketFinished() {
-
+    public TicketEntity ticketFinished(TicketEntity ticket) {
+        ticket.setTicketStatus(TicketStatus.FINISHED);
+        return ticket;
     }
 
     @Override
-    public NotificationEntity<SupportEntity> sendNotificationToSupport() {
-        return null;
+    public NotificationEntity<SupportEntity> makeNotificationToSupport() {
+        String message = "This ticket has been finished by the developer";
+
+        return new NotificationEntityBuilder<SupportEntity>()
+                .withMessage(message)
+                .withTitle(title)
+                .withType(ticketType.name())
+                .withUserEntity(new SupportEntity(this.support))
+                .build();
     }
 }

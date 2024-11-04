@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import javax.annotation.processing.SupportedSourceVersion;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity(name = "support")
 public class SupportEntity extends UserEntity implements UserInterface {
@@ -21,6 +22,7 @@ public class SupportEntity extends UserEntity implements UserInterface {
 
     public SupportEntity() {
     }
+
 
     @Override
     public Long getId() {
@@ -45,6 +47,10 @@ public class SupportEntity extends UserEntity implements UserInterface {
         super(supportDto.name(), supportDto.email());
         this.id = supportDto.id();
         this.isAvailable = supportDto.isAvailable();
+    }
+    public SupportEntity(SupportEntity supportEntity){
+        super(supportEntity.getName(), supportEntity.getEmail());
+        this.id = supportEntity.getId();
     }
 
     @Override

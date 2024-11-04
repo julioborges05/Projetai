@@ -68,6 +68,10 @@ public class TicketEntity {
         this.ticketType = ticketType;
     }
 
+    public Long getClientId() {
+        return clientId;
+    }
+
     public void setTicketStatus(TicketStatus ticketStatus) {
         this.ticketStatus = ticketStatus;
     }
