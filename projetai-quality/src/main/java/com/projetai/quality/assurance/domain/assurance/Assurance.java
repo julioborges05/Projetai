@@ -1,6 +1,7 @@
 package com.projetai.quality.assurance.domain.assurance;
 
 import com.projetai.core.infra.notification.NotificationEntity;
+import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
 import com.projetai.quality.assurance.infra.assurance.AssuranceEntity;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
