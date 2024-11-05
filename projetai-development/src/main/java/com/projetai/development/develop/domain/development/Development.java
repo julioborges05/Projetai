@@ -3,10 +3,9 @@ package com.projetai.development.develop.domain.development;
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.notification.NotificationEntityBuilder;
 import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.user.developer.DeveloperEntity;
-import com.projetai.development.develop.application.dto.DevelopmentDto;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.domain.development.type.DevelopmentType;
 import com.projetai.development.develop.infra.development.DevelopmentEntity;
 import com.projetai.development.develop.infra.development.DevelopmentEntityBuilder;
 import com.projetai.development.refinement.infra.user.techLead.TechLeadEntity;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 public class Development implements DevelopmentInterface {
 
     private Long id;
-    private DevelopmentType type;
     private DevelopmentStatus status;
     private Long developerId;
 
@@ -30,17 +28,13 @@ public class Development implements DevelopmentInterface {
 
     private Integer estimatedHours;
 
-    private Long previousDevelopmentId;
-
     public Development(Long id,
                        Long developerId,
-                       DevelopmentType type,
                        DevelopmentStatus status,
                        LocalDateTime startedTime,
                        TicketEntity ticketEntity,
                        Integer estimatedHours) {
         this.id = id;
-        this.type = type;
         this.status = status;
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
@@ -49,12 +43,10 @@ public class Development implements DevelopmentInterface {
     }
 
     public Development(Long developerId,
-                       DevelopmentType type,
                        DevelopmentStatus status,
                        LocalDateTime startedTime,
                        TicketEntity ticketEntity,
                        Long techLeadId) {
-        this.type = type;
         this.status = status;
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
@@ -63,7 +55,6 @@ public class Development implements DevelopmentInterface {
     }
 
     public Development(Long id,
-                       DevelopmentType type,
                        DevelopmentStatus status,
                        Long developerId,
                        TicketEntity ticketEntity,
@@ -72,7 +63,6 @@ public class Development implements DevelopmentInterface {
                        Long techLeadId,
                        Integer estimatedHours) {
         this.id = id;
-        this.type = type;
         this.status = status;
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
@@ -84,10 +74,12 @@ public class Development implements DevelopmentInterface {
 
     public Development(Long developerId,
                        TicketEntity ticketEntity,
-                       Integer estimatedHours) {
+                       Integer estimatedHours,
+                       DevelopmentStatus status) {
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
         this.estimatedHours = estimatedHours;
+        this.status = status;
     }
 
     @Override
@@ -95,7 +87,6 @@ public class Development implements DevelopmentInterface {
         return new DevelopmentEntityBuilder()
                 .withId(id)
                 .withDeveloperId(developerId)
-                .withType(type)
                 .withStatus(status)
                 .withTicket(ticketEntity)
                 .withStartedTimeAt(startedTime)
@@ -107,7 +98,6 @@ public class Development implements DevelopmentInterface {
     public DevelopmentEntity makeAdjustments() {
         return new DevelopmentEntityBuilder()
                 .withDeveloperId(developerId)
-                .withType(type)
                 .withStatus(status)
                 .withTicket(ticketEntity)
                 .withStartedTimeAt(startedTime)
@@ -119,7 +109,6 @@ public class Development implements DevelopmentInterface {
         return new DevelopmentEntityBuilder()
                 .withId(id)
                 .withDeveloperId(developerId)
-                .withType(type)
                 .withStatus(status)
                 .withTicket(ticketEntity)
                 .withStartedTimeAt(startedTime)
@@ -144,7 +133,7 @@ public class Development implements DevelopmentInterface {
         return new NotificationEntityBuilder<DeveloperEntity>()
                 .withMessage(message)
                 .withTitle("Necessary adjustments!")
-                .withType(DevelopmentType.NECESSARY_ADJUSTMENTS.name())
+                .withType(TicketStatus.NECESSARY_ADJUSTMENTS.name())
                 .withUserEntity(developer)
                 .build();
     }
@@ -157,7 +146,7 @@ public class Development implements DevelopmentInterface {
                 .withMessage(message)
                 .withTitle("Task completed")
                 .withUserId(techLeadId)
-                .withType(type.name())
+                .withType(ticketEntity.getTicketType().name())
                 .build();
     }
 

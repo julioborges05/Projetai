@@ -2,7 +2,6 @@ package com.projetai.development.develop.infra.development;
 
 import com.projetai.core.infra.ticket.TicketEntity;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.domain.development.type.DevelopmentType;
 
 import java.time.LocalDateTime;
 
@@ -12,11 +11,6 @@ public class DevelopmentEntityBuilder {
 
     public DevelopmentEntityBuilder withId(Long id) {
         developmentEntity.setId(id);
-        return this;
-    }
-
-    public DevelopmentEntityBuilder withType(DevelopmentType developmentType) {
-        developmentEntity.setType(developmentType);
         return this;
     }
 

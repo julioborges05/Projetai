@@ -1,6 +1,5 @@
 package com.projetai.quality.assurance.application;
 
-import com.projetai.development.utils.exceptions.UserNotFoundException;
 import com.projetai.quality.assurance.application.dto.AssuranceDto;
 import com.projetai.quality.assurance.domain.assurance.Assurance;
 import com.projetai.quality.assurance.domain.assurance.status.AssuranceStatus;
@@ -13,7 +12,6 @@ import com.projetai.core.infra.user.support.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -48,7 +46,7 @@ public class AssuranceService {
         Optional<SupportEntity> supportEntity = supportRepository.findById(assuranceDto.supportId());
         Optional<DeveloperEntity> developerEntity = developerRepository.findById(assuranceDto.developerId());
         if(supportEntity.isEmpty() || developerEntity.isEmpty()){
-            throw new UserNotFoundException("User not found");
+            throw new RuntimeException("User not found");
         }
 
         Assurance assurance = new Assurance(assuranceDto.id(), assuranceDto.title(), assuranceDto.message(), AssuranceStatus.ON_HOLD, developerEntity.get(), supportEntity.get());
@@ -58,7 +56,7 @@ public class AssuranceService {
     public void necessaryAdjustmentsAssurance(AssuranceDto assuranceDto) {
         Optional<AssuranceEntity> assuranceEntityOptional = assuranceRepository.findById(assuranceDto.id());
         if(assuranceEntityOptional.isEmpty()){
-            throw new UserNotFoundException("Assurance not found");
+            throw new RuntimeException("Assurance not found");
         }
 
         AssuranceEntity assuranceEntity = assuranceEntityOptional.get();
@@ -70,7 +68,7 @@ public class AssuranceService {
     public void completeAssurance(AssuranceDto assuranceDto) {
         Optional<AssuranceEntity> assuranceEntityOptional = assuranceRepository.findById(assuranceDto.id());
         if(assuranceEntityOptional.isEmpty()){
-            throw new UserNotFoundException("Assurance not found");
+            throw new RuntimeException("Assurance not found");
         }
 
         AssuranceEntity assuranceEntity = assuranceEntityOptional.get();

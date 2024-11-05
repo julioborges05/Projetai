@@ -3,6 +3,7 @@ package com.projetai.development.develop.application;
 import com.projetai.core.infra.comment.CommentRepository;
 import com.projetai.core.infra.notification.NotificationRepository;
 import com.projetai.core.infra.ticket.TicketEntity;
+import com.projetai.core.infra.ticket.TicketEnum.TicketStatus;
 import com.projetai.core.infra.ticket.TicketRepository;
 import com.projetai.development.develop.application.dto.CommentDto;
 import com.projetai.development.develop.application.dto.DeveloperDto;
@@ -11,7 +12,6 @@ import com.projetai.development.develop.application.dto.EstimatedHoursDto;
 import com.projetai.development.develop.domain.comment.Comment;
 import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.domain.development.type.DevelopmentType;
 import com.projetai.development.develop.infra.development.DevelopmentEntity;
 import com.projetai.development.develop.infra.development.DevelopmentRepository;
 import com.projetai.development.refinement.infra.user.techLead.TechLeadEntity;
@@ -70,7 +70,7 @@ public class DevelopmentService {
         }
 
         Development development = new Development(estimatedHoursDto.developerId(), ticketOp.get(),
-                estimatedHoursDto.estimatedHours());
+                estimatedHoursDto.estimatedHours(), DevelopmentStatus.ON_HOLD);
 
         developmentRepository.save(development.addEstimatedHours());
 
@@ -90,8 +90,8 @@ public class DevelopmentService {
         }
 
         Development development = new Development(developmentEntityOP.get().getId(),
-                developmentEntityOP.get().getDeveloperId(), developmentDto.developmentType(),
-                DevelopmentStatus.IN_PROGRESS, LocalDateTime.now(), ticketOp.get(), developmentEntityOP.get().getEstimatedHours());
+                developmentEntityOP.get().getDeveloperId(), DevelopmentStatus.IN_PROGRESS,
+                LocalDateTime.now(), ticketOp.get(), developmentEntityOP.get().getEstimatedHours());
 
         developmentRepository.save(development.startDevelopment());
     }
@@ -123,10 +123,9 @@ public class DevelopmentService {
             throw new RuntimeException("Ticket not found");
         }
 
-        Development development = new Development(developmentEntityOP.get().getId(), developmentEntityOP.get().getType(),
-                DevelopmentStatus.FINISHED, developmentDto.developerId(), ticketOp.get(),
-                developmentEntityOP.get().getStartedTime(), developmentDto.finishedTime(), developmentDto.techLeadId(),
-                developmentEntityOP.get().getEstimatedHours());
+        Development development = new Development(developmentEntityOP.get().getId(), DevelopmentStatus.FINISHED,
+                developmentDto.developerId(), ticketOp.get(), developmentEntityOP.get().getStartedTime(),
+                developmentDto.finishedTime(), developmentDto.techLeadId(), developmentEntityOP.get().getEstimatedHours());
 
         developmentRepository.save(development.completeDevelopment());
 
@@ -146,8 +145,8 @@ public class DevelopmentService {
             throw new RuntimeException("Developer not found");
         }
 
-        Development development = new Development(adjustmentsDto.developerId(), DevelopmentType.NECESSARY_ADJUSTMENTS,
-                DevelopmentStatus.ON_HOLD, LocalDateTime.now(), ticketOp.get(), adjustmentsDto.techLeadId());
+        Development development = new Development(adjustmentsDto.developerId(),DevelopmentStatus.ON_HOLD,
+                LocalDateTime.now(), ticketOp.get(), adjustmentsDto.techLeadId());
 
         notificationDeveloperRepository.save(development.makeNotificationToDev(adjustmentsDto.necessaryAdjustments(), developerOp.get()));
 
