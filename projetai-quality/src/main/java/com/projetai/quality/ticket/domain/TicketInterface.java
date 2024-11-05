@@ -3,20 +3,22 @@ package com.projetai.quality.ticket.domain;
 
 import com.projetai.core.infra.notification.NotificationEntity;
 import com.projetai.core.infra.ticket.TicketEntity;
-import com.projetai.core.infra.user.developer.DeveloperEntity;
-import com.projetai.core.infra.user.support.SupportEntity;
+import com.projetai.core.infra.user.UserEntity;
+import com.projetai.quality.ticket.domain.parameters.AnalyzeTicket;
 import com.projetai.quality.ticket.domain.parameters.TicketParametersDto;
 
 public interface TicketInterface {
 
     TicketEntity defineTicketParameters(TicketParametersDto parameters);
 
-    NotificationEntity<DeveloperEntity> makeNotificationToDev();
+    NotificationEntity<UserEntity> makeNotificationToDev();
 
-    boolean analizeTicket();
+    TicketEntity analizeTicket(TicketEntity ticket, AnalyzeTicket message);
 
-    NotificationEntity<SupportEntity> sendNotificationToSupport();
+    TicketEntity ticketFinished(TicketEntity ticket);
 
-    void ticketFinished();
+    NotificationEntity<UserEntity> makeNotificationToSupport();
+
+    NotificationEntity<UserEntity> makeNotificationToClient();
 
 }

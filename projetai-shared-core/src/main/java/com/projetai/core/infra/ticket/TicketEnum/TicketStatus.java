@@ -4,5 +4,6 @@ public enum TicketStatus {
     TODO,
     IN_PROGRESS,
     ON_HOLD,
+    NECESSARY_ADJUSTMENTS,
     FINISHED
 }

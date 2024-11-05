@@ -1,7 +1,7 @@
 package com.projetai.development.develop.application.dto;
 
-import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.domain.development.type.DevelopmentType;
+import java.time.LocalDateTime;
 
-public record DevelopmentDto(Long id, String title, String message, DevelopmentType developmentType, DevelopmentStatus developmentStatus, Long developerId) {
+public record DevelopmentDto(Long id, Long developerId, Long ticketId, Long techLeadId, LocalDateTime finishedTime,
+                             Integer estimatedHours) {
 }

@@ -7,28 +7,32 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name = "techLead")
+@Entity(name = "tech_lead")
 public class TechLeadEntity extends UserEntity implements UserInterface {
 
     @Id
-    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     public TechLeadEntity() {
     }
 
-    public TechLeadEntity(TechLead techLead) {
-        super(techLead.getName(), techLead.getEmail());
+    public TechLeadEntity(Long id, String name, String email) {
+        super(name, email);
+        this.id = id;
     }
 
-    public TechLead toTechLead() {
-        return new TechLead(name, email);
+    public TechLeadEntity(TechLead techLead) {
+        super(techLead.getName(), techLead.getEmail());
     }
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
