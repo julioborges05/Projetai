@@ -1,6 +1,5 @@
 create table if not exists development (
     id serial primary key,
-    type varchar(255),
     status varchar(255),
     developer_id bigint not null,
     started_time date,

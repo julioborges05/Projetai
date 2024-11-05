@@ -1,11 +1,7 @@
 package com.projetai.development.develop.infra.development;
 
 import com.projetai.core.infra.ticket.TicketEntity;
-import com.projetai.core.infra.user.support.SupportEntity;
-import com.projetai.development.develop.domain.development.Development;
 import com.projetai.development.develop.domain.development.status.DevelopmentStatus;
-import com.projetai.development.develop.domain.development.type.DevelopmentType;
-import com.projetai.core.infra.user.developer.DeveloperEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +12,7 @@ public class DevelopmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private DevelopmentType type;
+
     private DevelopmentStatus status;
 
     @Column(name = "developer_id")
@@ -37,11 +33,9 @@ public class DevelopmentEntity {
 
     public DevelopmentEntity() {}
 
-    public DevelopmentEntity(Long id, DevelopmentType type, DevelopmentStatus status, Long developerId,
-                             TicketEntity ticketEntity, LocalDateTime startedTime, LocalDateTime finishedTime,
-                             Integer estimatedHours) {
+    public DevelopmentEntity(Long id, DevelopmentStatus status, Long developerId, TicketEntity ticketEntity,
+                             LocalDateTime startedTime, LocalDateTime finishedTime, Integer estimatedHours) {
         this.id = id;
-        this.type = type;
         this.status = status;
         this.developerId = developerId;
         this.ticketEntity = ticketEntity;
@@ -56,14 +50,6 @@ public class DevelopmentEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public DevelopmentType getType() {
-        return type;
-    }
-
-    public void setType(DevelopmentType type) {
-        this.type = type;
     }
 
     public DevelopmentStatus getStatus() {
